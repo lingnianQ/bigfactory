@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="css/eui.css">
+    <style>
+        body {
+            font: 18px "Microsoft YaHei UI";
+            margin: 0;
+        }
+
+        header a {
+            text-decoration: none;
+            color: #6c6c6c;
+        }
+
+        header a:hover {
+            color: #0aa1ed;
+        }
+
+        /*去掉自带的内边距*/
+        .el-table .el-table__cell {
+            padding: 0;
+        }
+
+        .p_img:hover {
+            position: relative;
+            bottom: 5px;
+            /*元素的阴影:x偏移值 y偏移值 浓度 范围 颜色*/
+            box-shadow: 0 0 10px 5px #333;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header style="padding: 0;height: 150px">
+            <div style="width: 1200px;margin: 0 auto">
+                <img src="imgs/logo.png"
+                     style="width: 300px;vertical-align: middle" alt="">
+                <span>
+                    <a href="index.html">首页</a><el-divider direction="vertical"></el-divider>
+                    <a href="">热点咨询</a><el-divider direction="vertical"></el-divider>
+                    <a href="">商家入驻</a><el-divider direction="vertical"></el-divider>
+                    <a href="">社会招聘</a><el-divider direction="vertical"></el-divider>
+                    <a href="">校园招聘</a><el-divider direction="vertical"></el-divider>
+                    <a href="">帮助中心</a>
+                </span>
+            </div>
+            <!--蓝色导航条开始-->
+            <div style="width: 100%;height: 60px;background-color: #82c8ec">
+                <el-menu style="width: 1200px;margin: 0 auto"
+                         default-active="1"
+                         class="el-menu-demo"
+                         mode="horizontal"
+                         @select="handleSelect"
+                         background-color="#82c8ec"
+                         text-color="#fff"
+                         active-text-color="#fff">
+                    <el-menu-item v-for="c in categoryArr"  :index="c.id.toString()">{{c.name}}</el-menu-item>
+                    <!--搜索框开始-->
+                    <div style="float: right;padding-top: 15px">
+                        <!--keydown.native.enter 添加回车按下事件 -->
+                        <el-input  size="mini" @keydown.native.enter="search()" v-model="wd"
+                                   placeholder="请输入关键字搜索"></el-input>
+                        <el-button style="background-color: rgba(0,0,0,0);border:none;position: absolute;right: 0;padding-top: 10px"
+                                   @click="search()"  icon="el-icon-search"></el-button>
+                    </div>
+                    <!--搜索框结束-->
+                </el-menu>
+            </div>
+            <!--蓝色导航条结束-->
+        </el-header>
+        <el-main style="width: 1200px;margin: 0 auto">
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <el-card>
+                        <img :src="product.url" width="100%" alt="">
+                    </el-card>
+                </el-col>
+                <el-col :span="12">
+                    <p style="font-size: 25px">{{product.title}}</p>
+                    <el-divider></el-divider>
+                    <p style="font-size: 15px;color: #999">
+                        销量:{{product.saleCount}} 浏览量:{{product.viewCount}}
+                    </p>
+                    <p style="font-size: 25px;font-weight: bold">
+                        ￥{{product.price}}
+                        <span style="font-size: 15px;color: #999">
+                          原价:<s>{{product.oldPrice}}</s>
+                        </span>
+                    </p>
+                    <!--二维码开始-->
+                    <el-row :gutter="20" style="text-align: center">
+                        <el-col :span="8">
+                            <el-card>
+                                <img src="imgs/ewm.jpg" width="100%" alt="">
+                            </el-card>
+                            <span>扫码购买商品</span>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-card>
+                                <img src="imgs/ewm.jpg" width="100%" alt="">
+                            </el-card>
+                            <span>扫码关注公众号</span>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-card>
+                                <img src="imgs/ewm.jpg" width="100%" alt="">
+                            </el-card>
+                            <span>扫码下载App</span>
+                        </el-col>
+                    </el-row>
+                    <!--二维码结束-->
+                </el-col>
+            </el-row>
+        </el-main>
+        <el-footer style="padding: 0">
+            <div style="background-image: url('imgs/wave.png');
+                    height: 95px;margin-bottom: -30px"></div>
+            <div style="background-color: #3f3f3f;height: 100px;
+                    font-size: 14px;color: #b1b1b1;
+                    text-align: center;padding: 30px">
+                <p>Copyright © 北京达内金桥科技有限公司版权所有 京ICP备12003709号-3 京公网安备 11010802029572号</p>
+                <p>涵盖20余门课程体系，致力于打造权威的IT职业教育学习平台</p>
+                <p>达内在线WWW.TMOOC.CN 专注于IT职业技能培训</p>
+            </div>
+        </el-footer>
+    </el-container>
+</div>
+</body>
+<script src="js/axios.min.js"></script>
+<!-- import Vue before Element -->
+<script src="js/vue.js"></script>
+<!-- import JavaScript -->
+<script src="js/eui.js"></script>
+<script>
+    let v = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                categoryArr: [],
+                productArr:[],
+                selectIndex:0,
+                wd:"",
+                product: {
+                    title: "森马牛仔裤女宽松慢跑裤运动风2022春季新款显瘦束脚长裤复古",
+                    price: 233, oldPrice: 598, url: "imgs/a.jpg", saleCount: 2342, viewCount: 999
+                }
+            }
+        },
+        methods:{
+            search(){
+                //跳转到结果页面并且把搜索的关键字传递过去
+                location.href = "/result.html?wd="+this.wd;
+            },
+            handleSelect(index){
+                console.log(index);
+                //传递过来的index 其实就是分类的id
+                //跳转到新的页面显示这个分类下的商品信息
+                if (index!=-1){//判断出点击的不是搜索框
+                    location.href="/result.html?cid="+index;
+                }
+
+            }
+        },
+        created:function () {
+            //发请求获取所有的分类信息
+            axios.get("/category/list").then(function (response) {
+                v.categoryArr = response.data;
+            })
+            //判断是否在地址栏的参数中包含cid 包含代表显示的分类结果
+            //如果不包含 代表显示的是搜索结果
+            if (location.search.indexOf("cid")!=-1){
+                //得到地址栏中的分类id
+                let cid = location.search.split("=")[1];
+                //让首页点击的分类在此页面中显示被选中
+                this.selectIndex=cid;
+                //查询此分类下所有商品的数据
+                axios.get("/product/selectByCid/"+cid).then(function (response) {
+                    v.productArr = response.data;
+                })
+            }else{//地址栏中不包含cid 那就是包含wd 显示搜索结果
+                let wd = location.search.split("=")[1];
+                //请求地址中如果有中文 浏览器会自动进行url编码操作
+                // 直接得到的内容是包含%和16进制类似乱码的效果
+                //需要通过decodeURI方法进行解码后得到中文内容
+                this.wd = decodeURI(wd);
+                //通过搜索的关键字发请求查询相关的商品信息
+                axios.get("/product/selectByWd/"+wd).then(function (response) {
+                    v.productArr = response.data;
+                })
+            }
+
+
+        },
+        mounted: function () {
+            //获取商品id
+            let id = location.search.split("=")[1];
+            //通过id查询商品信息
+            axios.get("/product/select/" + id).then(function (response) {
+                v.product = response.data;
+            })
+        }
+    })
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

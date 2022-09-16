@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      <h3>{{username}}</h3>
+      <h3>{{10+20}}</h3>
+      <h4>{{new Date().toLocaleString()}}</h4>
+  </div>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            username: "Jack",
+
+        }
+    })
+</script>
+</body>
+</html>

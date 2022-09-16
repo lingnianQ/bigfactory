@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/eui.css">
+</head>
+<body>
+<div id="app">
+    <el-container>
+    <el-header style="margin: 20px;">
+        <h2>发布一篇微博</h2>
+    </el-header>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="标题">
+            <el-input type="text" v-model="form.title"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+            <el-input type="textarea" v-model="form.content"></el-input>
+        </el-form-item>
+
+        <el-form-item label="类型">
+            <el-radio-group v-model="form.type">
+                <el-radio  label="1">原创</el-radio>
+                <el-radio  label="2">转载</el-radio>
+            </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="标签">
+            <el-checkbox-group v-model="form.tagIds">
+                <el-checkbox :label="item.id"
+                             v-for="item of checkList"
+                             :key="item.id">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
+        </el-form-item>
+
+        <el-form-item>
+            <el-button type="primary" @click="doAdd">立即创建</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+    </el-container>
+</div>
+<!-- import Vue before Element -->
+<script src="js/vue.js"></script>
+<!-- import JavaScript -->
+<script src="js/eui.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+    let vm=new Vue({
+        el:"#app",
+        data: function() {
+            return {
+              checkList:[],
+              form:{
+                  title:"",
+                  content:"",
+                  type:"",
+                  tagIds:[]
+              }
+            }
+        },
+        methods:{
+            doAdd(){
+                 console.log("article.form",vm.form);
+                  axios.post("/article/create",vm.form)
+                     .then(function(resp){
+                         vm.$message(resp.data.message);
+                         location.href="/article.html"
+                });
+            }
+        },
+        mounted:function(){
+             axios.get("/tag")
+                  .then(function(resp){
+                     console.log(resp.data);
+                      vm.checkList=resp.data.data;
+                  })
+                  .catch(function(err){
+                      console.log(err);
+                  })
+        }
+    });
+</script>
+</body>
+</html>

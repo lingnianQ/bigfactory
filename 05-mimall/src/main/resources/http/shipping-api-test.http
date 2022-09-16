@@ -1,0 +1,13 @@
+POST http://localhost:8001/shippings
+Content-Type: application/json
+
+{
+  "receiverName": "Jack",
+  "receiverPhone": "11111111111",
+  "receiverMobile": "1121212312",
+  "receiverProvince": "beijing",
+  "receiverCity": "beijing",
+  "receiverDistrict": "潘家园",
+  "receiverAddress": "松榆里65号",
+  "receiverZip": "100001"
+}

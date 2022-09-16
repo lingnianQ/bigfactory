@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.UserDao">
+      <!--com.spring.dao.UserDao.insert-->
+      <insert id="insert" parameterType="com.spring.pojo.User">
+          insert into tb_users
+          (username,nickname,password,mobile,status,created_time,modified_time)
+          values
+          (#{username},#{nickname},#{password},#{mobile},#{status},#{createdTime},#{modifiedTime})
+      </insert>
+
+
+      <!--
+      <select id="selectByUsername" resultType="com.spring.pojo.User">
+          select id,username,password,nickname,mobile,status
+          from tb_users
+          where username=#{username}
+      </select>
+      -->
+
+      <select id="list" resultType="com.spring.pojo.User">
+          select id,username,nickname,password,mobile,status,created_time,modified_time
+          from tb_users
+          <where>
+            <if test="createdTime!=null and createdTime!=''">
+               created_time>#{createdTime}
+            </if>
+          </where>
+      </select>
+
+     <update id="validById">
+        update tb_users set status=#{status}
+        <where>
+          <choose>
+          <when test="ids!=null and ids.length>0">
+             id in <!--(1,2,3,4)-->
+            <foreach collection="ids" item="userId" separator="," open="(" close=")">
+                #{userId}
+            </foreach>
+          </when>
+          <otherwise>
+              1=2
+          </otherwise>
+          </choose>
+        </where>
+     </update>
+
+    <update id="update" parameterType="com.spring.pojo.User">
+        update tb_users
+        <set>
+            <if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
+            <if test="mobile!=null and mobile!=''">mobile=#{mobile},</if>
+            <if test="modifiedTime!=null">modified_time=#{modifiedTime},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+</mapper>

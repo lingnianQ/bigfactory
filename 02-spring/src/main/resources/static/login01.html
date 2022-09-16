@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/eui.css">
+
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header style="margin: 20px;">
+            <h2>会员登陆</h2>
+        </el-header>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="用户名">
+            <el-input type="text" v-model="form.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+            <el-input type="password" v-model="form.password"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="doLogin">登陆</el-button>
+            <el-button @click="doReg">注册</el-button>
+        </el-form-item>
+    </el-form>
+    </el-container>
+</div>
+<!-- import Vue before Element -->
+<script src="js/vue.js"></script>
+<!-- import JavaScript -->
+<script src="js/eui.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/jy.header.js"></script>
+<script>
+    Vue.component("jy-header",jyHeader);
+    let vm=new Vue({
+        el:"#app",
+        data: function() {
+            return {
+                form: {
+                    username: '',
+                    password: ''
+                }
+            }
+        },
+        methods:{
+            doReg(){
+              location.href="./reg.html"
+            },
+            doLogin(){
+                console.log("user info :",this.form);
+                //数据要发送服务端
+                let url=`/login01/${this.form.username}/${this.form.password}`
+                axios.post(url,{})
+                    .then(function(resp){
+                        console.log(resp);
+                        vm.$message(resp.data.message);
+                        location.href="./article.html"
+                    })
+                    .catch(function(){
+                        vm.$message.error("login error");
+                    })
+            }
+        }
+    });
+</script>
+</body>
+</html>

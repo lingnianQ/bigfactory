@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.ArticleDao">
+
+    <!--添加文章：
+        1)useGeneratedKeys="true"表示使用自增主键值。
+        2)keyProperty="id" 这里表示将主键值赋值给参数中的id属性-->
+    <insert id="insert"
+            parameterType="com.spring.pojo.Article"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into tb_articles
+        (title,type,content,status,user_id,created_time,modified_time)
+        values
+        (#{title},#{type},#{content},#{status},#{userId},now(),now())
+    </insert>
+    <!--ResultMap是mybatis中用于实现高级映射的元素-->
+    <resultMap id="articleTag" type="com.spring.pojo.Article">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="type" column="type"></result>
+        <result property="content" column="content"></result>
+        <result property="status" column="status"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="createdTime" column="created_time"></result>
+        <result property="modifiedTime" column="modified_time"></result>
+        <association property="author" javaType="com.spring.pojo.User">
+            <id property="id" column="user_id"></id>
+            <result property="username" column="username"></result>
+            <result property="nickname" column="nickname"></result>
+        </association>
+        <!--Collection对应one2many关系映射-->
+        <collection property="tags" ofType="com.spring.pojo.Tag">
+             <id property="id" column="tagId"></id>
+             <result property="name" column="tagName"></result>
+        </collection>
+    </resultMap>
+
+    <!--基于sql元素可以对映射语句中的共性进行提取，其它地方需要的再使用include进行包含即可-->
+    <sql id="selectArt">
+        select ar.id,ar.title,ar.type,ar.content,ar.status,ar.user_id,ar.created_time,ar.modified_time,
+               tag.id tagId,tag.name tagName,u.username,u.nickname
+        from tb_articles  ar
+                 join tb_users u on ar.user_id=u.id
+                 left join tb_article_tags art on ar.id=art.article_id
+                 left join tb_tags tag on art.tag_id =tag.id
+    </sql>
+    
+    <!--基于文章id查询文章信息以及文章对应的tag信息-->
+    <select id="selectById" resultMap="articleTag">
+       <include refid="selectArt"></include>
+       where ar.id=#{id}
+    </select>
+
+    <!--基于文章id查询文章信息以及文章对应的tag信息-->
+    <select id="list" resultMap="articleUser">
+        select ar.id,ar.title,ar.type,ar.content,ar.status,ar.user_id,ar.created_time,ar.modified_time,
+               u.username,u.nickname
+        from tb_articles  ar join tb_users u on ar.user_id=u.id
+        order by ar.created_time desc
+    </select>
+    <resultMap id="articleUser" type="com.spring.pojo.Article">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="type" column="type"></result>
+        <result property="content" column="content"></result>
+        <result property="status" column="status"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="createdTime" column="created_time"></result>
+        <result property="modifiedTime" column="modified_time"></result>
+        <association property="author" javaType="com.spring.pojo.User">
+            <id property="id" column="user_id"></id>
+            <result property="username" column="username"></result>
+            <result property="nickname" column="nickname"></result>
+        </association>
+    </resultMap>
+</mapper>
+

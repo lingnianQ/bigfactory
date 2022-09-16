@@ -1,0 +1,21 @@
+### 基于id查询文章信息
+GET http://localhost:8080/article/2
+
+### 查询所有文章信息
+GET http://localhost:8080/article/list1
+
+### 查询所有文章信息(分页查询)
+GET http://localhost:8080/article/list2/1/5
+
+### 发布文章
+POST http://localhost:8080/article/create
+Content-Type: application/json
+
+{
+  "title": "Spring Security",
+  "content": "Spring Security ....",
+  "type": "1",
+  "status": "1",
+  "userId": 1,
+  "tagIds": [1,3]
+}

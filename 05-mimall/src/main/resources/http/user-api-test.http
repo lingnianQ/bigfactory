@@ -1,0 +1,19 @@
+### 注册
+POST http://localhost:8001/user/register
+Content-Type: application/json
+
+{
+  "username": "Mike",
+  "password": "123456",
+  "phone": "13323456789",
+  "email": "mike@163.com"
+}
+
+### 登陆
+POST http://localhost:8001/user/login
+Content-Type: application/json
+
+{
+  "username": "Jack",
+  "password": "123456"
+}

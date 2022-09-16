@@ -1,0 +1,26 @@
+server:
+  port: 80
+spring:
+  datasource: #配置连接池 (默认连接池为HikariCP)
+    url: jdbc:mysql://localhost:3306/cs?serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: root
+  resources:
+    static-locations: file:D:/file,classpath:static
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 256
+        keep-alive: 60000
+        queue-capacity: 512
+      thread-name-prefix: async-service-task-
+mybatis:
+  configuration:
+    #开启驼峰命名规则 (sale_count-->saleCount)
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.blog: debug
+    org.springframework: warn
+

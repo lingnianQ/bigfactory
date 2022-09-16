@@ -1,0 +1,14 @@
+### 查询所有分类
+GET http://localhost/category/list
+
+### 添加分类
+POST http://localhost/category/insert
+Content-Type: application/json
+
+{
+  "name": "家用电器"
+}
+
+### 基于id删除分类
+
+DELETE http://localhost/category/delete/9

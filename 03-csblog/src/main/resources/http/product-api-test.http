@@ -1,0 +1,10 @@
+GET http://localhost/product/list/index
+
+###基于关键字查询
+GET http://localhost/product/selectByWd/2022
+
+###基于商品分类id查询
+GET http://localhost/product/selectByCid/2
+
+###查询后端商品列表
+GET http://localhost/product/list/admin

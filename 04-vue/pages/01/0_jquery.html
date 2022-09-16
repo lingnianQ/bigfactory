@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.3.js"></script>
+</head>
+<body>
+
+ <div>
+     <button id="minus">-</button>
+     <span id="result">10</span>
+     <button id="add">+</button>
+ </div>
+<script>
+    $("#minus").click(function(){
+        let result=$("#result").html();
+        let n=parseInt(result);
+        if(n>0){
+            n--;
+        }
+        $("#result").html(n)
+    })
+    $("#add").click(function(){
+        let result=$("#result").html();
+        let n=parseInt(result);
+        n++;
+        $("#result").html(n)
+    })
+</script>
+
+</body>
+</html>

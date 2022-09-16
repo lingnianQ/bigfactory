@@ -1,0 +1,5 @@
+### 基于分类id查询
+GET http://localhost:8001/products?categoryId=100012&pageNum=1&pageSize=3
+
+### 基于商品id查询
+GET http://localhost:8001/products/35

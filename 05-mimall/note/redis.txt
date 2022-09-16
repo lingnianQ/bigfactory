@@ -1,0 +1,15 @@
+下载redis
+https://github.com/tporadowski/redis/releases
+
+安装windows下安装服务，在redis根目录启动命令行(cmd)，执行
+redis-server --service-install redis.windows.conf
+
+启动redis服务(启动成功以后会出现successful)
+redis-server --service-start
+
+其它redis指令（这个操作可以不执行）
+redis-server --service-stop //停止服务
+redis-server --service-uninstall //卸载服务
+
+连接测试redis,在redis根路径执行（默认端口6379）
+redis-cli -h 127.0.0.1 -p 6379
