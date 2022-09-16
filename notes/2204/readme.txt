@@ -3,7 +3,7 @@
 ----------------------------------------------------------
 齐雷
 博客地址:yutian.blog.csdn.net
-代码仓库:gitee.com/JasonCN2008
+代码仓库:https://gitee.com/JasonCN2008/bigfactory
 微信号:17610939576 (中心+班级+姓名)
 公众号:老齐课堂
 抖音号:yutian7799
