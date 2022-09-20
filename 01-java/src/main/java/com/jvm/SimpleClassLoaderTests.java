@@ -12,6 +12,17 @@ class SimpleClassLoader extends ClassLoader{
     }
 
     @Override
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        try {
+            //先尝试自己加载
+            return findClass(name);
+        }catch (Exception e){
+            //双亲委派(加载基础类库中的一些类)
+            return super.loadClass(name,resolve);
+        }
+    }
+
+    @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         String path=baseDir+name.replace(".","\\")+".class";
         System.out.println(path);
@@ -25,7 +36,7 @@ class SimpleClassLoader extends ClassLoader{
             //基于数组中的内容构建字节码对象
             return defineClass(name,buf,0,buf.length);
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new RuntimeException(e);
         }finally{
             if(in!=null)try{in.close();}catch (Exception e){}
@@ -34,8 +45,13 @@ class SimpleClassLoader extends ClassLoader{
 }
 public class SimpleClassLoaderTests {
     public static void main(String[] args) throws ClassNotFoundException {
-        SimpleClassLoader classLoader=
+        SimpleClassLoader classLoader1=
                 new SimpleClassLoader("d:\\bigfactory\\notes\\");
-        classLoader.loadClass("pkg.Hello");//findClass
+        Class<?> aClass1 = classLoader1.loadClass("pkg.Hello");//findClass
+
+        SimpleClassLoader classLoader2=
+                new SimpleClassLoader("d:\\bigfactory\\notes\\");
+        Class<?> aClass2 = classLoader2.loadClass("pkg.Hello");//findClass
+        System.out.println(aClass1==aClass2);
     }
 }
