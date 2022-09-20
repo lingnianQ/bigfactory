@@ -12,7 +12,7 @@ public class LinkedHashMapTests {
                     protected boolean removeEldestEntry(Map.Entry eldest) {
                         return size()>3;
                     }
-                };
+        };
 
         map.put("A",100);
         map.put("B",200);
@@ -20,6 +20,5 @@ public class LinkedHashMapTests {
         map.get("A");
         map.put("D",400);
         System.out.println(map);
-
     }//LruCache
 }
