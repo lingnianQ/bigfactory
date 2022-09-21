@@ -148,7 +148,7 @@ from employees;
 ##方案1
 select
     sum(case  when salary>=10000 then 1 else 0 end) '大于等于10000',
-        sum(case  when salary<10000  then 1 else 0 end) '小于10000'
+    sum(case  when salary<10000  then 1 else 0 end) '小于10000'
 from employees;
 
 ##方案2:
@@ -164,9 +164,6 @@ group by salary_level;
 
 
 #6.对雇员表进行分页查询,每页最多显示10条,查询第二页数据,并按工资进行降序排序?
-
-
-
 
 
 
