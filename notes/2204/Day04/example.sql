@@ -53,7 +53,6 @@ FROM information_schema.TABLES
 WHERE table_schema = 'dbtest'
 GROUP BY table_schema;
 
-
 ###################################
 #数据库表设计范式(范式与反范式)
 ###################################
@@ -87,13 +86,84 @@ create table teacher
  first_name varchar(50) not null comment '名',
  last_name varchar(30) not null comment '姓',
  mobile varchar(11) not null comment '手机号',
+ school_id bigint not null,
  school_name varchar(50) not null comment '学校名',
  school_phone varchar(10) not null comment '学校电话',
  primary key (id)
 )engine=innoDB default character set utf8mb4;
 
 
+#反范式:这种范式一般是为了提高查询的效率,在表中添加一些冗余字段
+#例如,如下表中的school_name就为冗余字段(我们可以直接通过单表查询,就可找到老师在哪个学校任职)
+create table teacher
+(id bigint not null auto_increment,
+ first_name varchar(50) not null comment '名',
+ last_name varchar(30) not null comment '姓',
+ mobile varchar(11) not null comment '手机号',
+ school_id bigint not null,
+ school_name varchar(50) not null comment '学校名',
+ primary key (id)
+)engine=innoDB default character set utf8mb4;
 
+#但是这里有一个问题,假如对学校做了更新,更新了学校名称,但没有更新教师表,此时两个表中的数据可能就不一致了.
+create table school(
+ id bigint not null auto_increment,
+ school_name varchar(50) not null comment '学校名',
+ school_phone varchar(10) not null comment '学校电话',
+ primary key (id)
+)engine=innoDB default character set utf8mb4;
+
+use hr;
+show tables;
+select employee_id,manager_id from employees;
+
+######################################
+# SQL 练习
+#####################################
+#1.查询雇员编号为206的雇员,他的经理人名字以及薪水?
+##方案1:嵌套查询
+select first_name,salary
+from employees
+where employee_id=(
+    select manager_id
+    from employees
+    where employee_id=206);
+
+##方案2:多表自关联
+select m.first_name,m.salary
+from employees e join employees m
+                      on e.manager_id=m.employee_id
+where e.employee_id=206;
+
+#2.查询每个雇员的薪资,并显示薪资级别(例如 >10000的高,8000~10000的中等,<8000的低)
+
+select first_name,salary,(case  when salary>10000 then '高'
+                                when salary>8000 then '中'
+                                else '低'
+    end) level
+from employees;
+
+#3.统计出薪资大于等于10000和薪资小于10000的雇员人数
+
+##方案1
+select
+    sum(case  when salary>=10000 then 1 else 0 end) '大于等于10000',
+        sum(case  when salary<10000  then 1 else 0 end) '小于10000'
+from employees;
+
+##方案2:
+select (case when salary>=10000 then '大于等于10000'
+             else '小于10000' end) 'salary_level',count(*)
+from employees
+group by salary_level;
+
+#4.求平均工资最低的那个部门的名字以及平均薪水?
+
+
+#5.求每个雇员的名字,他所在部门的名字以及这个部门所在城市?
+
+
+#6.对雇员表进行分页查询,每页最多显示10条,查询第二页数据,并按工资进行降序排序?
 
 
 
