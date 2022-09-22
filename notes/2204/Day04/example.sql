@@ -166,6 +166,16 @@ group by salary_level;
 
 #6.对雇员表进行分页查询,每页最多显示10条,查询第二页数据,并按工资进行降序排序?
 
+select *
+from (
+     select *
+     from employees
+     limit 10,10
+)
+order by salary desc
+
+
+
 
 
 

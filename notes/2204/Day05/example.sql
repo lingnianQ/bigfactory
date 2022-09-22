@@ -52,6 +52,7 @@ show index from oper_log;
 ############################################
 #explain (执行计划)
 ############################################
+
 select count(*) from employees;
 explain select * from  employees where employee_id>100;
 explain select * from  employees where employee_id=100;
@@ -92,7 +93,38 @@ having avg(salary)>(
     select avg(salary)
     from employees
     where department_id=60
-)
+);
+
+select * from jobs;
+show index from jobs;
+
+explain
+select *
+from jobs
+where job_title like 'A%' and min_salary>3000 and max_salary<30000;
+
+create index index_title_min_max on jobs(job_title,min_salary,max_salary);
+drop index index_title_min_max on jobs;
+
+############################
+# example
+############################
+#1.对雇员表进行分页查询,每页最多显示10条,查询第二页数据,并按工资进行降序排序?
+
+explain
+select e.employee_id
+from (
+         select *
+         from employees
+         where employees.employee_id>=(
+             select employee_id
+             from employees
+             order by employee_id
+             limit 100,1
+         )
+         limit 0,10
+     ) e
+order by e.salary desc
 
 
 
