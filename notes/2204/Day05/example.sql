@@ -14,9 +14,7 @@ create table oper_log(
     index index_username (username),
     primary key (id)
 )engine=InnoDB default character set utf8mb4;
-
 create index index_ip on oper_log(ip);
 alter table oper_log add index index_created_time (created_time);
-
 #显示索引
 show index from oper_log;
