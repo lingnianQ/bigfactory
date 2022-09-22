@@ -17,7 +17,7 @@ import java.util.List;
                timeout = 60,//事务超时时间(秒)
                rollbackFor = Exception.class,//出现什么异常进行回滚
                isolation = Isolation.READ_COMMITTED,//事务隔离级别
-               propagation = Propagation.REQUIRED)//事务传播特性propagation
+               propagation = Propagation.REQUIRES_NEW)//事务传播特性propagation
 @Slf4j
 @Service
 public class ArticleServiceImpl implements ArticleService {

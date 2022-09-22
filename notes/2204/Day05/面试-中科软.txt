@@ -1,0 +1,48 @@
+1.反射的应用场景
+1)编写框架(例如Spring中Bean对象的创建,为对象进行依赖注入.)
+2)编写一些通用工具类(例如一个工厂对象,注解解析工具类)
+
+2.Mybatis和mybatisplus区别
+MyBatisPlus在MyBatis的基础上做了增强,例如对insert,update等操作又进行了封装.
+但是编写复杂SQL或者对SQL调优还是推荐使用mybatis.
+
+3.SpringBoot和SpringCloud有啥区别
+SpringCloud是一种微服务解决方案,SpringBoot是构建SpringCloud的一个脚手架,
+可以简化了微服务项目的构建以及代码的编写.
+4.Netty应用场景
+
+Netty是一个网络编程框架,底层基于NIO方式处理网络请求,支持并发比较大.通常用于做一些网关服务器的实现.
+例如SpringCloud Gateway就是基于Netty框架实现的.
+
+5.Mapper接口的工作原理
+项目启动时,会对Mapper接口进行扫描,并为接口创建代理对象,
+然后基于代理对象通过SqlSession实现与数据库的会话.
+
+6.Seate事务的那个回滚,  具体流程
+
+Seate事务是一种分布式事务,底层基于AT模式(2阶段提交)进行事务控制,当在AT模式
+的第二阶段进行事务提交时,假如事务协调器收到某个本地事务提交失败的消息后,会通
+知所有本地事务执行事务回顾操作,这里事务回滚本质上是要进行反向操作(这个操作的
+的指令来自一份日志).
+
+7.左连接右连接
+1)left outer join on
+2)right outer join on
+
+8.Mybatis中的动态sql语句
+1)if
+2)choose (when, otherwise)
+3)trim (where, set)
+4)foreach
+
+9.脏读和幻读
+多个事务并发执行时,可能会出现脏读,不可重复度,幻影读等问题
+1)脏读:一个事务读取了其它事务中未提交的数据.
+2)不可重复读: 一个事务再读取某条数据,其它事务对数据进行了修改.
+3)幻影读: 一个事务对表中数据进行统计时,其它事务向表中写入或删除数据.
+
+10.Union和union all区别
+1)共性:都可以合并查询结果
+2)特性:
+2.1)union会合并重复记录
+2.2)union会对合并结果进行排序
