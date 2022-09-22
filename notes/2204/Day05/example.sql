@@ -49,3 +49,57 @@ create index index_error on oper_log(error(5));
 
 #显示索引
 show index from oper_log;
+############################################
+#explain (执行计划)
+############################################
+select count(*) from employees;
+explain select * from  employees where employee_id>100;
+explain select * from  employees where employee_id=100;
+
+explain
+select * from  employees where first_name like 'd%';
+
+explain
+select * from employees where first_name='Lee';
+create index index_first_name on employees(first_name);
+
+show index from employees;
+
+explain select m.first_name,m.salary
+        from employees e join employees m
+                              on e.manager_id=m.employee_id
+        where e.employee_id=206;
+
+explain select first_name,salary
+        from employees
+        where manager_id=(
+            select manager_id
+            from employees
+            where employee_id=206);
+
+explain
+select employee_id,first_name
+from employees
+union
+select department_id,department_name
+from departments;
+
+explain
+select department_id,avg(salary)
+from employees
+group by department_id
+having avg(salary)>(
+    select avg(salary)
+    from employees
+    where department_id=60
+)
+
+
+
+
+
+
+
+
+
+
