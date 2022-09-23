@@ -63,9 +63,9 @@ set global  transaction isolation level read committed;
 set global  transaction isolation level read uncommitted;
 #2)创建表并写入数据
 create table tx(
-                   id bigint not null auto_increment,
-                   msg varchar(100) default '',
-                   primary key (id)
+    id bigint not null auto_increment,
+    msg varchar(100) default '',
+    primary key (id)
 )engine = innoDB default character set utf8mb4;
 insert into tx (msg) values ('A');
 select * from tx;
@@ -80,6 +80,7 @@ select * from tx where id=1;
 
 #练习2:启动两个命令行SQL窗口,演示不可重复?
 #练习3:启动两个命令行SQL窗口,演示幻影读?
+##########################################
 
 
 
