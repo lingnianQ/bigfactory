@@ -22,3 +22,8 @@ show global variables like 'slow_query_log_file';
 show processlist;
 
 show full processlist;
+
+####################################
+# profile
+####################################
+select @@have_profiling;
