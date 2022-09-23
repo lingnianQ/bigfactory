@@ -26,4 +26,49 @@ show full processlist;
 ####################################
 # profile
 ####################################
+#查看数据库是否支持profile,假如值yes表示支持
 select @@have_profiling;
+#查看profile是否开启,假如结果为0则表示为开启
+select @@profiling;
+
+#开启当前会话profile
+set profiling=1;
+
+#开启全局的profile (所有会话都会开启)
+set global profiling=1;
+
+#确定 SQL 的 query id
+select * from employees;
+show profiles;
+
+#查询 SQL 执行详情
+show profile for query 78;
+
+#######################################
+#索引优化分析
+#######################################
+explain
+select * from employees where employee_id='206'
+
+explain
+select * from employees where department_id='60';
+
+explain
+select * from employees where salary>'10000';
+
+show index  from employees;
+create index index_hire_date on employees(hire_date);
+
+explain
+select first_name,hire_date
+from employees
+where year(hire_date)='1999';
+
+
+create index index_id_salary on employees(employee_id,salary);
+
+explain
+select employee_id,salary
+from employees
+where employees.employee_id>0 and salary>20000
+order by employee_id,salary;
