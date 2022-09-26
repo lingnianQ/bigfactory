@@ -10,6 +10,7 @@ import com.spring.pojo.Article;
 import com.spring.pojo.User;
 import com.spring.pojo.vo.JsonResult;
 import com.spring.service.ArticleService;
+import com.spring.service.impl.ArticleServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +26,19 @@ import java.util.List;
 public class ArticleController {
 
     //@Resource(name = "articleServiceImpl")
-    @Autowired
-    @Qualifier("articleServiceImpl")
+    //@Autowired
+    //@Qualifier("articleServiceImpl")
     private ArticleService articleService;
+
+    //构造注入
+//    @Autowired
+//    public ArticleController(@Qualifier("articleServiceImpl") ArticleService articleService){
+//        this.articleService=articleService;
+//    }
+    @Autowired
+    public void setArticleService(@Qualifier("articleServiceImpl") ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     /**
      * @RequiredLog 注解描述的方法为一个日志切入点方法
