@@ -33,9 +33,13 @@ class Singleton{
 class LazySingleton{
     private static LazySingleton instance;
     private LazySingleton(){}
-    public static LazySingleton getInstance() {
-        if(instance==null) {
-            instance = new LazySingleton();
+    public static  LazySingleton getInstance() {
+        if(instance==null) {//A,B,C
+            synchronized (LazySingleton.class) {
+                if (instance == null) {//A,B
+                    instance = new LazySingleton();
+                }
+            }
         }
         return instance;
     }
@@ -43,8 +47,12 @@ class LazySingleton{
 
 public class SingletonTests {
     public static void main(String[] args) {
-        LazySingleton instance1 = LazySingleton.getInstance();
-        LazySingleton instance2 = LazySingleton.getInstance();
-        System.out.println(instance1==instance2);
+        for(int i=0;i<10;i++) {
+            Thread t1 = new Thread(() -> {
+                LazySingleton instance1 = LazySingleton.getInstance();
+                System.out.println(instance1);
+            });
+            t1.start();
+        }
     }
 }
