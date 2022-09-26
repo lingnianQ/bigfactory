@@ -3,8 +3,11 @@
 ###############################
 
 #查看慢查询日志是否开启(默认是OFF状态)
+
 show variables like '%slow_query_log%';
+
 #开启慢查询日志(要看到变化需要重新登录)
+
 set global slow_query_log = 'on';
 
 #查看慢查询默认的时间阈值
