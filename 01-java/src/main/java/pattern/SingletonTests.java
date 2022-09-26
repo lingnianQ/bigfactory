@@ -31,13 +31,24 @@ class Singleton{
  * 懒加载模式的单例设计
  */
 class LazySingleton{
-    private static LazySingleton instance;
+    /**
+     * volatile 关键字通常用于修饰共享属性
+     * 1)禁止指令重排序
+     * 2)保证线程之间的可见性.
+     * 3)不具备原子性.
+     */
+    private static volatile LazySingleton instance;
     private LazySingleton(){}
     public static  LazySingleton getInstance() {
         if(instance==null) {//A,B,C
             synchronized (LazySingleton.class) {
                 if (instance == null) {//A,B
                     instance = new LazySingleton();
+                    //构建对象的基本步骤
+                    //1.分配内存
+                    //2.初始化属性
+                    //3.调用构造构造方法
+                    //4.为instance赋值
                 }
             }
         }
