@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Api(tags = "文章管理")
 @RestController
@@ -39,7 +40,6 @@ public class ArticleController {
     public void setArticleService(@Qualifier("articleServiceImpl") ArticleService articleService) {
         this.articleService = articleService;
     }
-
     /**
      * @RequiredLog 注解描述的方法为一个日志切入点方法
      * @param articleId
@@ -52,7 +52,7 @@ public class ArticleController {
     @RequiredTime
     @RequiredLog(operation="浏览具体文章")
     @GetMapping("/article/{articleId}")
-    public JsonResult doSelectById(
+    public synchronized JsonResult doSelectById(
             @PathVariable("articleId") Long articleId){
         if(articleId<0)
             throw new IllegalArgumentException("文章id不合法");
