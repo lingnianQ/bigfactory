@@ -47,7 +47,7 @@
                  left join tb_article_tags art on ar.id=art.article_id
                  left join tb_tags tag on art.tag_id =tag.id
     </sql>
-    
+    <cache readOnly="false"/>
     <!--基于文章id查询文章信息以及文章对应的tag信息-->
     <select id="selectById" resultMap="articleTag">
        <include refid="selectArt"></include>

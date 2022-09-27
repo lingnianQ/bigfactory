@@ -26,6 +26,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public JsonResult doHandleRuntimeException(RuntimeException e){
         log.error("exception {}",e.getMessage());
+        e.printStackTrace();
         return new JsonResult(e);
     }
 

@@ -1,11 +1,13 @@
 package com.spring.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 基于这里的User类型对象存储用户信息
  */
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 7083371067457961359L;
     private Long id;
     private String username;
     private String nickname;

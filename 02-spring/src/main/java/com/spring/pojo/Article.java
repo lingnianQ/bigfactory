@@ -2,11 +2,12 @@ package com.spring.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-public class Article {
+public class Article implements Serializable {
+    private static final long serialVersionUID = -7479712512227011775L;
     @ApiModelProperty(value="id",example = "1")
     private Long id;
     @ApiModelProperty(value="title",example = "title-A")

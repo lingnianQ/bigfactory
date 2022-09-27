@@ -1,12 +1,12 @@
 ### 登陆操作(参数传递方案1)
-POST http://localhost:8080/login/Jack/123456
+POST http://localhost:8080/login01/Jack/123456
 
 ### 登陆操作(参数传递方案2)
-POST http://localhost:8080/login
+POST http://localhost:8080/login02
 Content-Type: application/json
 
 {
-  "username": "Jack",
+  "username": "Jason",
   "password": "123456"
 }
 
