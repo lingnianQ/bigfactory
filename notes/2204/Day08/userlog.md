@@ -21,6 +21,7 @@ primary key (id)
 create index index_username on log (username);
 create index index_created_time on log(created_time);
 ```
+
 ## 获取并记录日志的方案是什么?
 1)基于AOP方式获取用户行为日志
 2)基于数据库表存储获取到的日志
