@@ -204,7 +204,7 @@ Docker + Kubernates
 * 从0到1完成商品子系统的设计及代码落地
 * 从0到1完成商品秒杀系统的设计及代码落地
 
-## 慧眼视频巡查服务平台
+## 慧眼巡视
 
 **技术栈**
 
@@ -224,8 +224,7 @@ Spring+ Kafka + MinIO + Redis + MySQL
   不丢失消息, 在消息中加入了消息 ID 确保了消息的幂等性, 使用多线程来提高消息处理速度。
 * 在小程序前后端数据交互时, 采用 AES 加密的方式进行通信, 后台通过对Jackson的MessageConverter
   中read、writeInternal 方法重写实现了对 controller 层代码无侵入的加解密过程。
-
-
+  
 ## 微人事
 
 **技术架构：**
@@ -233,6 +232,7 @@ Spring+ Kafka + MinIO + Redis + MySQL
 Spring+ Spring Boot + Spring Security + Mybatis + MySQL + Redis + RabbitMQ+Vue + ElementUI
 
 **项目描述：** 
+
 微人事是一个前后端分离的人力资源管理系统, 帮助企业实现人力资源信息化管理，使人员
 管理数据化、自动流程化，便于人员规划，完善制度，为决策者提供人事数据支撑。
 
@@ -240,7 +240,7 @@ Spring+ Spring Boot + Spring Security + Mybatis + MySQL + Redis + RabbitMQ+Vue +
 
 * 认证模块: 使用Spring Security认证授权, 并在管理员添加一名员工后会自动发送邮件
 * 数据识别模块: 使用了百度智能云提供的API, 对员工上传的证件如: 身份证的识别, 减少了人工压力
-* 数据导入导出模块: 可将员工数据导出为Excel，也可以将外部Excel导入到员工数据表中
+* 数据导入导出模块: 可将员工数据导出为Excel，也可以将外部Excel导入到员工数据表中。
 
 
 
