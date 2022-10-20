@@ -95,7 +95,7 @@ group by table_schema;
 * 表中字段的数量(宽表/窄表)
 * 表的设计范式与反范式
 
-**常见问题分析***
+**常见问题分析**
 
 * 如何查看创建表的语法？
 
@@ -139,32 +139,33 @@ unique key (phone)
 
 * MySql表中常用的字段约束有哪些？
 
-1. 非空约束(not null)
-2. 主键约束(primary key)
-3. 唯一约束(unique key)
-4. 检查约束(check)
-5. 外键约束(foreign key)
+1. 非空约束(not null)：字段的值不允许为空
+2. 主键约束(primary key)：字段值不允许为空并且唯一
+3. 唯一约束(unique key)：字段值必须唯一
+4. 检查约束(check)：字段值需要在指定范围(但是数据库之间的兼容不好)
+5. 外键约束(foreign key)：字段值需要参考引用表中的字段值。
 
-案例应用
+案例应用(创建课程分类表category,课程表course并相关约束进行应用)
 
 ```
 drop table if exists category;
 
 create table if not exists category(
 id int auto_increment comment '主键值',
-category_name varchar(100) not null comment '不允许为空',
+category_name varchar(100) not null comment '分类名称',
 primary key (id)
 )engine=InnoDB character set utf8mb4;
+
 ```
 
 ```
 drop table if exists course;
 
-create table if not exists course (
+create table if not exists course ( 
 id bigint auto_increment comment '主键id',
 name varchar(100) not null comment '课程名称',
 credit tinyint not null  comment '学分',
-category_id int,
+category_id int comment '分类id',
 check (credit between 0 and 100),
 primary key (id),
 unique key (name),
