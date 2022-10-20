@@ -23,7 +23,7 @@
 
 * MySQL中创建数据库的语法是怎样的？
 
-help 'create database';
+通过 help 'create database' 方式查看创建数据库的语法。
 
 ```
 CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
@@ -49,3 +49,39 @@ CREATE DATABASE IF NOT EXISTS JSDVN2205  COLLATE  utf8mb4_general_ci;
 ```
 show variables like '%collation_%'
 ```
+
+* 如何删除MySQL中的数据库？
+
+首先通过 help 'drop database' 方式查询删除数据库的语法。
+
+```
+DROP {DATABASE | SCHEMA} [IF EXISTS] db_name
+```
+基于语法实现数据库的删除
+
+```
+DROP DATABASE IF EXISTS JSDTN2205;
+```
+
+* 如何打开数据库?
+
+```
+use JSDTN2205;
+```
+
+* 如何查看数据库中有哪些表？
+
+```
+show tables;
+```
+
+* 如何统计数据库中有多少张表？(mysql5.7)
+
+```
+select table_schema,count(*) tables
+from information_schema.tables
+where table_schema='JSDVN2205'
+group by table_schema;
+```
+
+
