@@ -103,7 +103,12 @@ group by table_schema;
  help 'create table'
 ```
 
-案例分析：
+案例分析：打开JSDTN2205数据，然后在库中创建学生表(student)
+
+```
+use jsdtn2205
+```
+
 ```
 create table if not exists student(
 id bigint auto_increment,
@@ -117,5 +122,18 @@ unique key (phone)
 )engine = InnoDB character set utf8mb4;
 ```
 
+* MySql中常用的数据类型有哪些？
 
+1. 字符串类型 (char,varchar,text,...)
+2. 日期/时间类型(date,time,datetime,timestamp,...)
+3. 数值类型(tinyint,int,bigint,decimal,...)
+4. 二进制类型(blob,mediumblob,longblob,...)
+5. 其它(enum,set,json,...)
+
+* MySQL中数据类型的应用有什么原则吗？
+
+1. 尽量选择简单数据类型(例如存储整数用int不用varchar)
+2. 尽量使用最小数据类型(例如能用tinyint不用int)
+3. 假如要存储小数可以考虑使用decimal类型。
+4. 尽量避免使用text、blob等大字段类型(假如需要使用则尽量放到一张表中)
 
