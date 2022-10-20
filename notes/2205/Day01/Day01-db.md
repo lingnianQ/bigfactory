@@ -205,7 +205,8 @@ create table teacher(
 在teacher表的设计中，对于name字段其实可再分为姓和名，按照第一范式的的定义来讲，
 这个设计不满足第一范式，我们可以将这个设计调整为如下方案：
 ```
-create table teacher(
+create table teacher
+(
    id int auto_increment,
    first_name varchar(50) not null comment '名',
    last_name varchar(50) not null comment '姓',
@@ -222,12 +223,12 @@ create table if not exists score(
    sid bigint comment '学生编号',
    cid bigint comment '课程编号',
    cname varchar(50) not null comment '课程名',
-   score int not null comment '成绩'
+   score int not null comment '成绩',
    primary key (sid,cid)
 )engine=InnoDB character set utf8mb4;
 ```
 此表设计不满足第二范式，这里表中的cname依赖于cid，但不依赖于sid，
-存在部分依赖。可调整为如下方案:
+存在部分依赖。假如要满足第二范式，可调整为如下方案:
 
 ```
 create table if not exists score
@@ -238,4 +239,56 @@ create table if not exists score
    primary key (sid,cid)
 )engine=InnoDB character set utf8mb4;
 ```
+3. 分析如下设计是否满足第三范式？
+
+创建一个部门表，其代码如下：
+```
+create table if not exists departments
+(
+  id int auto_increment comment '部门编号',
+  name varchar(100) not null comment '部门名称',
+  city varchar(20) not null comment '所在城市',
+  street_address VARCHAR(40) not null '街道',
+  postal_code VARCHAR(12) default '' comment '邮编',
+  primary key (id)
+)engine=InnoDB character set utf8mb4;
+
+```
+此表的设计不满足第三范式，因为存在传递依赖，这里的邮编依赖于街道，
+街道又依赖于部门id，所以这里存在传递依赖，假如希望这个表的设计满
+足第三范式，可以将部门地址信息写到locations表，然后departments表
+再与locations建立关系，例如：
+
+```
+create table if not exists locations
+(
+  id int auto_increment comment '地址编号',
+  city varchar(20) not null comment '城市',
+  street_address VARCHAR(40) comment not null '街道',
+  postal_code VARCHAR(12) default '' comment '邮编',
+  primary key (id)
+)engine=InnoDB character set utf8mb4;
+
+```
+
+```
+create table if not exists departments
+(
+id int auto_increment comment '部门编号',
+name varchar(100) not null comment '部门名称',
+location_id int,
+unique key (name),
+primary key (id),
+foreign key (location_id) references locations(id)
+)engine=InnoDB character set utf8mb4;
+
+```
+
+* 如何理解表设计时的反范式？
+
+范式设计为我们进行表设计提供一些指导性思想，但实际项目中有时为了提高查询
+效率，可能会在表中适当的添加一些冗余字段。就类似于将课程名添加到成绩表中，
+这样查询成绩表时可以直接查询出课程名，不需要再去关联课程表进行查询了。但
+是这种冗余可能会带来更新的复杂读。例如更新课程表的课程名时，还要去更新
+成绩表中的课程名。
 
