@@ -90,8 +90,8 @@ group by table_schema;
 * 表的名字
 * 表中字段的类型
 * 表中字段常用约束
-* 表中字段的默认值
-* 表中字段的描述(含义)  
+* 表中字段的默认值(default)
+* 表中字段的描述(含义-comment)  
 * 表中字段的数量(宽表/窄表)
 * 表的设计范式与反范式
 
@@ -174,7 +174,68 @@ foreign key (category_id) references category (id)
 
 ```
 
+* 如何理解宽表和窄表这个概念？
 
+宽表和窄表的定义一般由企业内部开发规范进行定义(例如超出40个字段定义宽表)。
 
+1. 宽表就是表中字段比较多的表(字段越多维护越困难，甚至会影响查询效率)
+2. 窄表就是表中字段比较少的表(维护简单、太少可能会导致大量的表关联)
 
+* 如何理解表设计时的三大范式？
+
+范式是一种设计规范，一种关系模式，可以对表的设计起到一个指导性作用。
+
+1. 第一范式(1NF)：描述的是字段名不可再分。例如姓名可再分为姓和名，这属于可再分。
+2. 第二范式(2NF): 描述的是不存在非主键字段对主键字段的部分依赖。
+3. 第三范式(3NF): 不存在非主键字段对主键字段的部分依赖。
+
+范式应用案例分析：
+
+1. 分析如下表的设计是否满足第一范式？
+
+创建一张教师表，具体代码如下：
+
+```
+create table teacher(
+   id int auto_increment,
+   name varchar(50) not null comment '姓名',
+   primary key (id)
+)engine=InnoDB character set utf8mb4;
+```
+在teacher表的设计中，对于name字段其实可再分为姓和名，按照第一范式的的定义来讲，
+这个设计不满足第一范式，我们可以将这个设计调整为如下方案：
+```
+create table teacher(
+   id int auto_increment,
+   first_name varchar(50) not null comment '名',
+   last_name varchar(50) not null comment '姓',
+   primary key (id)
+)engine=InnoDB character set utf8mb4;
+```
+
+2. 分析如下表的设计是否满足第二范式？
+
+创建一张成绩表，代码设计如下：
+
+```
+create table if not exists score(
+   sid bigint comment '学生编号',
+   cid bigint comment '课程编号',
+   cname varchar(50) not null comment '课程名',
+   score int not null comment '成绩'
+   primary key (sid,cid)
+)engine=InnoDB character set utf8mb4;
+```
+此表设计不满足第二范式，这里表中的cname依赖于cid，但不依赖于sid，
+存在部分依赖。可调整为如下方案:
+
+```
+create table if not exists score
+(
+   sid bigint comment '学生编号',
+   cid bigint comment '课程编号',
+   score int not null comment '成绩',
+   primary key (sid,cid)
+)engine=InnoDB character set utf8mb4;
+```
 
