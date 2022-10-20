@@ -292,3 +292,6 @@ foreign key (location_id) references locations(id)
 是这种冗余可能会带来更新的复杂读。例如更新课程表的课程名时，还要去更新
 成绩表中的课程名。
 
+# 总结(Summary)
+
+
