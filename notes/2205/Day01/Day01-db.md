@@ -266,7 +266,7 @@ create table if not exists locations
 (
   id int auto_increment comment '地址编号',
   city varchar(20) not null comment '城市',
-  street_address VARCHAR(40) comment not null '街道',
+  street_address VARCHAR(40) not null comment '街道',
   postal_code VARCHAR(12) default '' comment '邮编',
   primary key (id)
 )engine=InnoDB character set utf8mb4;
