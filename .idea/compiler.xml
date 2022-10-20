@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="01-java" />
+        <module name="02-spring" />
+        <module name="05-mimall" />
+        <module name="03-csblog" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="01-java" target="8" />
+      <module name="02-spring" target="8" />
+      <module name="03-csblog" target="8" />
+      <module name="05-mimall" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
