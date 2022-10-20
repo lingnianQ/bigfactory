@@ -10,8 +10,8 @@
 # 课程内容说明
 
 * 简历设计(要争取面试机会)
-* JAVA基础增强(对面向象特性、高级集合、IO、序列化、多线程、网络编程、反射、lambda、Stream)
 * 数据库技术增强(数据库及表设计、常用SQL、事务、视图、索引、锁)
+* JAVA基础增强(对面向象特性、高级集合、IO、序列化、多线程、网络编程、反射、lambda、Stream)
 * 框架及中间件技术(SpringFramework,SpringBoot,Spring Cloud,SpringSecurity,MyBatis,Redis,MQ,ES,...)
 
 # 优秀简历设计分享

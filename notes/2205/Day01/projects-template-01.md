@@ -5,7 +5,7 @@
 **技术栈:**
 
 Spring Framework+Spring Boot + Nacos + Seata + Sentinel + SpringCloud Gateway +
-Dubbo + RabbitMQ + Redis + ELK + OSS + Mybatis + MySQL + Spring Security + JWT +
+Dubbo + Spring Security + JWT +RabbitMQ + Redis + ELK + OSS + Mybatis + MySQL + 
 Docker + Kubernates
 
 **项目描述**
@@ -22,7 +22,7 @@ Docker + Kubernates
 * 从0到1完成商品子系统的设计及代码落地
 * 从0到1完成商品秒杀系统的设计及代码落地
 
-## 慧眼巡视
+## 慧眼巡视平台
 
 **技术栈**
 
