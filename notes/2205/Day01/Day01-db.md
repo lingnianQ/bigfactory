@@ -137,3 +137,43 @@ unique key (phone)
 3. 假如要存储小数可以考虑使用decimal类型。
 4. 尽量避免使用text、blob等大字段类型(假如需要使用则尽量放到一张表中)
 
+* MySql表中常用的字段约束有哪些？
+
+1. 非空约束(not null)
+2. 主键约束(primary key)
+3. 唯一约束(unique key)
+4. 检查约束(check)
+5. 外键约束(foreign key)
+
+案例应用
+
+```
+drop table if exists category;
+
+create table if not exists category(
+id int auto_increment comment '主键值',
+category_name varchar(100) not null comment '不允许为空',
+primary key (id)
+)engine=InnoDB character set utf8mb4;
+```
+
+```
+drop table if exists course;
+
+create table if not exists course (
+id bigint auto_increment comment '主键id',
+name varchar(100) not null comment '课程名称',
+credit tinyint not null  comment '学分',
+category_id int,
+check (credit between 0 and 100),
+primary key (id),
+unique key (name),
+foreign key (category_id) references category (id)
+)engine=InnoDB character set utf8mb4;
+
+```
+
+
+
+
+
