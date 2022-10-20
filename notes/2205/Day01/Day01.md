@@ -3,7 +3,7 @@
 
 # 课前资料说明
 
-* gitee地址：gitee.com/JasonCN2008/jht
+* gitee地址：https://gitee.com/JasonCN2008/bigfactory/
 * CSDN个人博客: yutian.blog.csdn.net
 * 个人公众号：老齐课堂
 * 个人微信号：17610939576(JSD2207+中心+姓名)
