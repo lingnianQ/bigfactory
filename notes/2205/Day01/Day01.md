@@ -106,7 +106,7 @@ SpringCloud、RabbitMQ、Redis、Kafka等一些技术，你自己心里一定有
 
 简历是用人单位了解你的第一个窗口，是销售文案，一定要写好。
 
-* 简历参考resume-template-01.md
+* 简历参考 resume-template-01.md
 * 项目拓展参考 projects-template-01.md
 
 
