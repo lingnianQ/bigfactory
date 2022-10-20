@@ -78,10 +78,12 @@ show tables;
 * 如何统计指定数据库中有多少张表？(mysql5.7)
 
 ```
+
 select table_schema,count(*) tables
 from information_schema.tables
 where table_schema='JSDVN2205'
 group by table_schema;
+
 ```
 
 ## 数据库中表的设计
