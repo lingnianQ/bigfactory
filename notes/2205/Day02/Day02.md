@@ -214,24 +214,34 @@ order by total desc;
 
 **4)统计公司中有佣金提成的员工人数有多少?**
 
--- 方案1
+方案1
+```
 select count(*)
 from employees
 where commission_pct is not null;
+```
 
--- 方案2
+方案2
+```
 select count(1)
 from employees
 where commission_pct is not null;
+```
 
--- 方案3(count函数内部是列名,表示统计列值不为null的记录)
+方案3(count函数内部是列名,表示统计列值不为null的记录)
+
+```
 select count(commission_pct)
 from employees;
+```
 
 **5)统计年入职的人数有多少?(查看系统函数 help 'functions')**
+
+```
 select year(hire_date),count(*)
 from employees
 group by year(hire_date);
+```
 
 **6)查询每个部门的平均薪资,并按降序排序**
 
