@@ -401,6 +401,45 @@ drop view if exists emp_view;
 
 简单视图(基于单张表并且没有数据统计的视图)可以,但是不推荐.
 
+## 数据库中的事务处理
+
+* 什么是事务?
+一个逻辑工作单元,这个工作单元中的所有操作,要么都成功要么都失败.
+ 
+* 为什么要使用事务?
+
+用于保证数据的正确性(完整,一致)
+
+* 事务是如何保证数据的正确性的?
+
+通过事务的四大特性(原子性,一致性,隔离性,持久性)
+
+* 事务的隔离级别有哪些?
+
+四种(read uncommitted,read committed,repeatable read,Serializable)
+
+* 如何查询当前会话的事务隔离级别?
+```
+select @@tx_isolation;
+
+```
+* 如何修改当前会话的事务隔离级别?
+
+```
+ set session transaction isolation level read uncommitted;
+ set session transaction isolation level read committed;
+ set session transaction isolation level repeatable read;
+ set session transaction isolation level serializable;
+```
+* 多个事务并发执行时可能会带来什么问题?
+
+脏读,不可重复读,幻读
+
+
+
+
+
+
 
 
 
