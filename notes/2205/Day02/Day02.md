@@ -302,6 +302,25 @@ from (
 
 ```
 
+**11)说说如下查询SQL语句的执行顺序**
 
+```
+select(7)
+from (1)
+join (2)
+on (3)
+where(4)
+group by(5) 
+having(6)
+order by (8)
+limit(9)
+```
 
+**12)说说如下查询返回的结果数是多少?**
 
+```
+   select count(*)
+   from employees,deparements;
+```
+
+返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
