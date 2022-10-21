@@ -321,6 +321,52 @@ limit(9)
 ```
    select count(*)
    from employees,deparements;
+   
+```
+返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
+
+**13)删区域表(Regions)中区域名字重复的记录**
+准备工作(向表中写入一些重复的记录)
+```
+insert into regions(region_name) values ('Asia');
+insert into regions(region_name) values ('Asia');
+insert into regions(region_name) values ('Asia');
+```
+执行记录的删除?(不同数据库,不同版本中sql的编写可能会不同)
+
+方案1:MariaDB可以,MySQL5.7不可以
+
+```
+delete
+from regions
+where region_id not in(
+select min(region_id) 
+from regions
+group by region_name);
 ```
 
-返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
+方案2:MariaDB可以,MySQL5.7可以
+```
+delete
+from regions
+where region_id not in(
+select min_id
+from (
+select min(region_id) min_id
+from regions
+group by region_name)t);
+```
+
+方案3: 多表关联删除
+```
+delete r1.*
+from regions as r1 join regions as r2
+on r1.region_name=r2.region_name
+and r1.region_id>r2.region_id;
+```
+
+
+
+
+
+
