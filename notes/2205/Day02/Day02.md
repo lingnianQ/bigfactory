@@ -5,6 +5,7 @@
 * 初始化
 * 分析表设计
 * 高级查询应用
+* 视图(View)应用
 
 ## 数据初始化操作
 
@@ -365,6 +366,47 @@ on r1.region_name=r2.region_name
 and r1.region_id>r2.region_id;
 ```
 
+## 视图(View)的应用
+
+* 什么是视图?
+数据库中的一个对象,可以将其看成是一张虚拟表,基于表创建,视图中只有结构,不存储数据,
+可以通过视图查询到表中的数据.
+  
+* 为什么使用视图?
+  
+1)简化程序对SQL语句的编写
+2)更好保证数据数据的安全
+
+* 如何创建视图?
+
+```
+create view emp_view as
+select e.employee_id,d.department_name,l.city
+from employees e join departments d on e.department_id = d.department_id
+join locations l on d.location_id = l.location_id;
+```
+* 如何基于视图查询数据
+
+```
+select employee_id,department_name,city from emp_view;
+```
+
+* 如何删除视图?
+
+```
+drop view if exists emp_view;
+```
+* 可以基于视图更新表中数据吗?
+
+简单视图(基于单张表并且没有数据统计的视图)可以,但是不推荐.
+
+
+
+
+
+
+
+  
 
 
 
