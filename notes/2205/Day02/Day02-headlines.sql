@@ -1,4 +1,4 @@
-
+-- 微头条表设计
 DROP DATABASE  if exists `headlines`;
 CREATE database if NOT EXISTS `headlines` collate utf8mb4_unicode_ci;
 use `headlines`;
