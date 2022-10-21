@@ -1,4 +1,4 @@
-# 微人事系统数据库表设计及查询
+# 微人事(HR)系统数据库表设计及查询
 
 ## 课程安排
 
@@ -27,8 +27,10 @@
 ```
 CREATE TABLE regions
 (
-region_id int primary key auto_increment,
-region_name VARCHAR(25)
+region_id int auto_increment comment '编号',
+region_name VARCHAR(25) comment '区域名称',
+primary key (region_id),
+unique key (region_name)
 ) engine=innodb default character set utf8;
 ```
 
@@ -37,9 +39,9 @@ region_name VARCHAR(25)
 ```
 CREATE TABLE countries
 (
-country_id CHAR(2) primary key
-, country_name VARCHAR(40)
-, region_id int
+country_id CHAR(2) primary key,
+country_name VARCHAR(40) comment '国家名称',
+region_id int
 )engine=innodb default character set utf8;
 
 ALTER TABLE countries
@@ -54,12 +56,12 @@ REFERENCES regions(region_id)
 
 ```
 CREATE TABLE locations
-( location_id int(4) primary key auto_increment
-, street_address VARCHAR(40)
-, postal_code VARCHAR(12)
-, city VARCHAR(30) not null
-, state_province VARCHAR(25)
-, country_id CHAR(2)
+( location_id int(4) primary key auto_increment,
+  street_address VARCHAR(40),
+  postal_code VARCHAR(12), 
+  city VARCHAR(30) not null, 
+  state_province VARCHAR(25),
+  country_id CHAR(2)
 ) engine=innodb default character set utf8;
 
 ALTER TABLE locations
@@ -70,14 +72,13 @@ REFERENCES countries(country_id)
 );
 
 ```
-
 部门表(Departments)
 ```
 CREATE TABLE departments
-( department_id int(4) primary key auto_increment
-, department_name VARCHAR(30) NOT NULL
-, manager_id int(6)
-, location_id int(4)
+( department_id int(4) primary key auto_increment, 
+  department_name VARCHAR(30) NOT NULL,
+  manager_id int(6), 
+  location_id int(4)
 ) engine=innodb default character set utf8;
 
 ALTER TABLE departments
@@ -86,36 +87,34 @@ CONSTRAINT dept_loc_fk
 FOREIGN KEY (location_id)
 REFERENCES locations (location_id)
 ) ;
+
 ```
-
-
 岗位表(Jobs)
-
 ```
 CREATE TABLE jobs
-( job_id VARCHAR(10) primary key
-, job_title VARCHAR(35) NOT NULL
-, min_salary numeric(6)
-, max_salary numeric(6)
+( job_id VARCHAR(10) primary key, 
+  job_title VARCHAR(35) NOT NULL, 
+  min_salary numeric(6), 
+  max_salary numeric(6)
 ) engine=innodb default character set utf8;
 ```
 
 雇员表
 ```
 CREATE TABLE employees
-( employee_id int(6) primary key auto_increment
-, first_name VARCHAR(20)
-, last_name VARCHAR(25) NOT NULL
-, email VARCHAR(25) NOT NULL
-, phone_number VARCHAR(20)
-, hire_date DATE NOT NULL
-, job_id VARCHAR(10) NOT NULL
-, salary numeric(8,2)
-, commission_pct numeric(2,2)
-, manager_id int(6)
-, department_id int(4)
-, CONSTRAINT emp_salary_min CHECK (salary > 0)
-, CONSTRAINT emp_email_uk UNIQUE (email)
+( employee_id int(6) primary key auto_increment,
+  first_name VARCHAR(20), 
+  last_name VARCHAR(25) NOT NULL, 
+  email VARCHAR(25) NOT NULL, 
+  phone_number VARCHAR(20),
+  hire_date DATE NOT NULL, 
+  job_id VARCHAR(10) NOT NULL, 
+  salary numeric(8,2), 
+  commission_pct numeric(2,2),
+  manager_id int(6), 
+  department_id int(4), 
+  CONSTRAINT emp_salary_min CHECK (salary > 0),
+  CONSTRAINT emp_email_uk UNIQUE (email)
 ) engine=innodb default character set utf8;
 
 ALTER TABLE employees
@@ -138,20 +137,19 @@ CONSTRAINT dept_mgr_fk
 FOREIGN KEY (manager_id)
 REFERENCES employees (employee_id)
 ) ;
+
 ```
-
 岗位历史变更表
-
 ```
 CREATE TABLE job_history
-( employee_id int(6) NOT NULL
-, start_date DATE NOT NULL
-, end_date DATE NOT NULL
-, job_id VARCHAR(10) NOT NULL
-, department_id int(4)
-, CONSTRAINT jhist_date_interval
-CHECK (end_date > start_date)
-, CONSTRAINT jhist_emp_id_st_date_pk PRIMARY KEY (employee_id, start_date)
+( employee_id int(6) NOT NULL, 
+  start_date DATE NOT NULL, 
+  end_date DATE NOT NULL, 
+  job_id VARCHAR(10) NOT NULL,
+  department_id int(4), 
+  CONSTRAINT jhist_date_interval
+  CHECK (end_date > start_date), 
+  CONSTRAINT jhist_emp_id_st_date_pk PRIMARY KEY (employee_id, start_date)
 ) engine=innodb default character set utf8;
 
 ALTER TABLE job_history
@@ -173,6 +171,9 @@ REFERENCES departments(department_id)
 ## 常用查询分析及实践
 
 **1)求雇员编号206的经理人的名字和薪水？**
+
+请问雇员的经理人是雇员吗?是
+那经理人的id是不是需要在雇员id中有相同值?需要
 
 方案1：嵌套查询
 ```
