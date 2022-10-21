@@ -193,7 +193,67 @@ on e.manager_id=m.employee_id
 where e.employee_id=206
 ```
 
-**2)查询每个雇员的薪资，并给出薪资等级(例如>=10000高;>=8000and<10000 中等;<8000偏低)**
+**2)查询雇员206所在部门的部门名称以及这个部门所在的城市?**
+-- 雇员表中有部门名称吗?没有,部门表(departments)中有
+-- 雇员表中有城市名称名称?没有,地址表(locations)中有
+```
+select e.employee_id,d.department_name,l.city
+from employees e join departments d on e.department_id = d.department_id
+join locations l on d.location_id = l.location_id
+where e.employee_id=206;
+```
+
+**3)统计每个岗位的雇员数,并按人数进行降序排序?**
+
+```
+select job_id,count(*) total
+from employees
+group by job_id
+order by total desc;
+```
+
+**4)统计公司中有佣金提成的员工人数有多少?**
+
+-- 方案1
+select count(*)
+from employees
+where commission_pct is not null;
+
+-- 方案2
+select count(1)
+from employees
+where commission_pct is not null;
+
+-- 方案3(count函数内部是列名,表示统计列值不为null的记录)
+select count(commission_pct)
+from employees;
+
+**5)统计年入职的人数有多少?(查看系统函数 help 'functions')**
+select year(hire_date),count(*)
+from employees
+group by year(hire_date);
+
+**6)查询每个部门的平均薪资,并按降序排序**
+
+```
+select department_id,avg(salary)
+from employees
+group by department_id
+order by avg(salary) desc;
+```
+
+
+**7)查询每个部门的平均薪资,只显示平均薪资大于10000的,并按降序排序**
+
+```
+select department_id,avg(salary)
+from employees
+group by department_id
+having avg(salary)>10000
+order by 2 desc;
+```
+
+**8)查询每个雇员的薪资，并给出薪资等级(例如>=10000高;>=8000and<10000 中等;<8000偏低)**
 
 考核知识点：case when 表达式的应用
 ```
@@ -203,17 +263,7 @@ select first_name,salary,
             else '偏低' end) level
 from employees
 ```
-
-**3)统计每个岗位的雇员人数，并按人数多少进行降序排序。**
-
-```
-select job_id,count(*) total
-from employees
-group by job_id
-order by total desc
-```
-
-**4)统计薪资大于等于10000的人数，小于10000的人数。**
+**9)统计薪资大于等于10000的人数，小于10000的人数。**
 
 ```
 select  sum(case when salary>=10000 then 1 else 0 end ) '大于等于10000',
@@ -221,16 +271,7 @@ select  sum(case when salary>=10000 then 1 else 0 end ) '大于等于10000',
 from employees
 ```
 
-**5)查询雇员所在部门的部门名称以及这个部门所在的城市？**
-
-```
-select first_name,d.department_name,l.city
-from employees e join departments d on e.department_id=d.department_id
-                 join locations l on d.location_id=l.location_id
-    
-```
-
-**6)查询雇员表中第二页的数据(每页最多显示10条记录-页面大小)？**
+**10)查询雇员表中第二页的数据(每页最多显示10条记录-页面大小)？**
 
 方案1:(数据量比较小的情况下-这种查询是全表扫描，数据量大时查询会比较慢)
 ```
@@ -250,13 +291,7 @@ from (
                          on e1.employee_id=e2.employee_id
 
 ```
-**7)查询雇员表中每年入职的人数是多少？**
-```
-select year(hire_date),  count(*)
-from employees
-group by year(hire_date);
 
-```
 
 
 
