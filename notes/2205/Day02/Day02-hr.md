@@ -5,6 +5,8 @@
 * 初始化
 * 分析表设计
 * 高级查询应用
+* 视图(View)应用
+* 事务(Transaction)应用
 
 ## 数据初始化操作
 
@@ -321,6 +323,158 @@ limit(9)
 ```
    select count(*)
    from employees,deparements;
+   
+```
+返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
+
+**13)删区域表(Regions)中区域名字重复的记录**
+准备工作(向表中写入一些重复的记录)
+```
+insert into regions(region_name) values ('Asia');
+insert into regions(region_name) values ('Asia');
+insert into regions(region_name) values ('Asia');
+```
+执行记录的删除?(不同数据库,不同版本中sql的编写可能会不同)
+
+方案1:MariaDB可以,MySQL5.7不可以
+
+```
+delete
+from regions
+where region_id not in(
+select min(region_id) 
+from regions
+group by region_name);
 ```
 
-返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
+方案2:MariaDB可以,MySQL5.7可以
+```
+delete
+from regions
+where region_id not in(
+select min_id
+from (
+select min(region_id) min_id
+from regions
+group by region_name)t);
+```
+
+方案3: 多表关联删除
+```
+delete r1.*
+from regions as r1 join regions as r2
+on r1.region_name=r2.region_name
+and r1.region_id>r2.region_id;
+```
+
+## 视图(View)的应用
+
+* 什么是视图?
+
+数据库中的一个对象,可以将其看成是一张虚拟表,基于表创建,视图中只有结构,不存储数据,
+可以通过视图查询到表中的数据.
+  
+* 为什么使用视图?
+  
+1. 简化程序对SQL语句的编写
+2. 更好保证数据数据的安全
+
+* 如何创建视图?
+
+```
+create view emp_view as
+select e.employee_id,d.department_name,l.city
+from employees e join departments d on e.department_id = d.department_id
+join locations l on d.location_id = l.location_id;
+```
+* 如何基于视图查询数据
+
+```
+select employee_id,department_name,city from emp_view;
+```
+
+* 如何删除视图?
+
+```
+drop view if exists emp_view;
+```
+* 可以基于视图更新表中数据吗?
+
+简单视图(基于单张表并且没有数据统计的视图)可以,但是不推荐.
+
+## 数据库中的事务处理
+
+* 什么是事务?
+
+一个逻辑工作单元,这个工作单元中的所有操作,要么都成功要么都失败.
+ 
+* 为什么要使用事务?
+
+用于保证数据的正确性(完整,一致)
+
+* 事务是如何保证数据的正确性的?
+
+通过事务的四大特性(原子性,一致性,隔离性,持久性)
+
+* 事务的隔离级别有哪些?
+
+四种(read uncommitted,read committed,repeatable read,Serializable)
+
+* 如何查询当前会话的事务隔离级别?
+```
+select @@tx_isolation;
+
+```
+* 如何修改当前会话的事务隔离级别?
+
+```
+ set session transaction isolation level read uncommitted;
+ set session transaction isolation level read committed;
+ set session transaction isolation level repeatable read;
+ set session transaction isolation level serializable;
+```
+* 多个事务并发执行时可能会带来什么问题?
+
+1. 脏读 (一个事务读取了其它事务为提交的数据)
+2. 不可重复读(一个事务对同样查询条件的数据进行多次查询时,得到结果不一致)
+3. 幻读 (一个事务读取到的数据可能是表中不存在数据)
+
+* 如何解决多个事务并发执行时可能会带来什么问题?
+
+修改事务的隔离级别,但要注意一点,隔离级别越高效率越差.
+
+* 你知道事务的隔离级别在底层是如何实现的吗?
+
+通过锁和MVCC(多版本并发控制)
+
+## 作业(Homework)
+
+* 一个SQL查询语句的执行流程是怎样的?
+  
+* 一个SQL更新语句的执行流程是怎样的?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
