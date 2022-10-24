@@ -28,6 +28,7 @@ unlock tables;
 * 全局锁案例演示
 
 事务A | 事务B
+----- | -----
 flush tables with read lock|
 select * from regions | select * from regions
 select * from jobs    | select * from jobs
