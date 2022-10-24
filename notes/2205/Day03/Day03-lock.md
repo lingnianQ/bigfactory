@@ -141,12 +141,17 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 3. 如果被访问版本的db_trx_id大于ReadView中的max_trx_id值,表明
    该版本的事务在当前事务生成ReadView后才开启的,所以该版本不可以被
    当前事务访问.
- 
 4. 如果访问的版本的db_trx_id属性值在min_trx_id和max_trx_id之间
    ,就需要判断一下db_trx_id的值是不是在m_ids列表中,如果在,说明创建
    ReadView时,生成的该版本的事务还是活跃的,该版本不可以访问,如果不
    存在,则说明创建ReadView时,生成该版本的事务已经提交则可以读取.
    
+## 总结(Summary)
+
+* MySQL中的锁
+* MySQL中的MVCC
+
+  
 
 
 
