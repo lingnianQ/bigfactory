@@ -48,17 +48,35 @@ show index from student;
 2. 创建表后通过create语句创建索引(例如 create index 索引名 on 表名(字段名))
 3. 创建表后通过alter语句创建索引(例如 alter table add index 索引名(字段名))
 
-例如,创建普通索引
+* 创建普通索引案例分享.
+
 ```
 create index index_first_name on student(first_name);
 alter table student add index index_last_name (last_name);
 ```
 
-例如创建唯一索引
+* 创建唯一索引案例分享
+
 ```
 create unique index index_first_name on student(first_name);
+alter student add unique index index_first_name (last_name)
 ```
 
+* 创建组合索引案例分享
+
+```
+create index index_first_last on student(first_name,last_name);
+alter table student add index index_first_last (first_name,last_name);
+```
+* 如何删除索引?
+
+drop index 索引名 on 表名;
+
+例如
+
+```
+drop index index_first_last on student;
+```
 
 
 
