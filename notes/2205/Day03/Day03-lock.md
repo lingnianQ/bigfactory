@@ -35,7 +35,8 @@ select * from jobs    | select * from jobs
 insert into jobs (region_name) values ('A8');|
 Can't execute the query because you have a conflicting read lock | insert into jobs(region_name) values ('A9');
 ...                                                              | 阻塞;
-unlock tables | 阻塞结束开始执行.
+unlock tables |
+....          |阻塞结束开始执行.
 
 
 
