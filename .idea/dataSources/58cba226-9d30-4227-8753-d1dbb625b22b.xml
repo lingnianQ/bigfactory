@@ -1655,16 +1655,21 @@ start_date</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="439" parent="362" name="PRIMARY">
+    <index id="439" parent="362" name="index_first_last">
+      <ColNames>first_name
+last_name</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="440" parent="362" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="440" parent="362" name="index_first_name">
+    <key id="441" parent="362" name="index_first_name">
       <ColNames>first_name</ColNames>
       <UnderlyingIndexName>index_first_name</UnderlyingIndexName>
     </key>
-    <key id="441" parent="362" name="phone">
+    <key id="442" parent="362" name="phone">
       <ColNames>phone</ColNames>
       <UnderlyingIndexName>phone</UnderlyingIndexName>
     </key>
