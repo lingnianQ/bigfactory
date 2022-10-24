@@ -108,15 +108,18 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 
 * MVCC的底层逻辑是如何实现的呢?
 
-MVCC的实现原理主要依赖于记录中的三个隐藏字段，undolog，read view来实现的.
+  MVCC的实现原理主要依赖于记录中的三个隐藏字段，undolog，ReadView来实现的.
 
-* MVCC中的隐藏字段指的是哪些？
+* MVCC中的隐藏字段指的是哪些？(了解)
 
-1. DB_TRX_ID：6字节，最近修改事务id，记录创建这条记录或者最后一次修改该记录的事务id
-2. DB_ROLL_PTR：7字节，回滚指针，指向这条记录的上一个版本,用于配合undolog，指向上一个旧版本
-3. DB_ROW_ID：6字节，隐藏的主键，如果数据表没有主键，那么innodb会自动生成一个6字节的row_id，
+1. DB_TRX_ID：记录创建这条记录或者最后一次修改该记录的事务id
+2. DB_ROLL_PTR：回滚指针，指向这条记录的上一个版本,用于配合undolog实现数据的回滚.
+3. DB_ROW_ID：隐藏的主键，如果数据表没有主键，那么innodb会自动生成一个row_id，
 
-* 什么是readview？
+* 什么是ReadView？
+对于Read Committed和Repeatable Read的隔离级别,都要读取已经提交的事务数据,也就
+是说如果版本链中的事务没有提交,该版本的记录是不能被读取的,那哪个版本的事务是可以读取
+的,此时就引入了ReadView.
 
 事务执行操作时,会生成当前事务的ReadView,保存当前事务之前活跃的所有事务id。
 
@@ -127,15 +130,15 @@ MVCC的实现原理主要依赖于记录中的三个隐藏字段，undolog，rea
 3. max_trx_id: 保存当前事务结束后应分配的下一个id值。
 4. creator_trx_id: 保存创建ReadView的当前事务id。
 
-* 事务隔离特性的实现？
+* 事务隔离(RC,RR)特性的实现？
 
 事务在访问数据时，先判断trx_id是否在m_ids中：
-1. 假如在，则说明事务时活跃的，则继续判断trx_id与readview中的creator_trx_id是否相等，
+1. 假如在，则说明事务时活跃的，则继续判断trx_id与Readview中的creator_trx_id是否相等，
    相等，则说明当前事务在访问自己的操作数据，此时可以访问。假如不相等，说明当前事务
    访问的时其它活跃(未提交)事务的数据，此时访问不到。
 
 2. 假如不在，则判断trx_id与readview中max_trx_id，若trx_id>=max_trx_id，则说明访问数据
-   的最新值是当前事务后的事务操作，则当前事务无法访问改数据。若trx_id<max_trx_id,说明访
+   的最新值是当前事务后的事务操作，则当前事务无法访问该数据。若trx_id<max_trx_id,说明访
    问数据的最新值是当前事务之前的事务操作且已提交，可以访问。
    
 
