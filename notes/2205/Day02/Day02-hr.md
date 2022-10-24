@@ -445,13 +445,18 @@ select @@tx_isolation;
 
 * 你知道事务的隔离级别在底层是如何实现的吗?
 
-通过锁和MVCC(多版本并发控制)
+通过锁和MVCC(多版本并发控制-Multi Version Concurrent Control)
 
 ## 作业(Homework)
 
 * 一个SQL查询语句的执行流程是怎样的?
   
+![img.png](img.png)
+
 * 一个SQL更新语句的执行流程是怎样的?
+
+![img_1.png](img_1.png)
+
 
 
 
