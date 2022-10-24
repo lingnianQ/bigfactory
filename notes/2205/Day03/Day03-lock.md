@@ -87,7 +87,31 @@ select 操作不加锁.
 
 1. 共享锁:select * from regions where id=12 lock in share mode
 2. 排它锁:select * from regions where id=12 for update
+
+* 如何保证多个并发事务对同一记录进行操作时数据的一致性?
+
+可以对这条记录添加排它锁,但是这样可能会降低系统并发性能.
+
+## MVCC(多版本并发控制)
    
+* MVCC 是什么?
+
+MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历史版本
+保证读数据的一致性,但是这样方式相对于添加排它锁,并发性能要好.
+
+* 你是否还记得事务的四个特性,底层是如何保证这些特性成功的?
+
+1. 原子性(通过undolog实现-执行回滚)
+2. 隔离性(通过锁,MVCC-版本控制)
+3. 一致性(通过undolog,redolog,隔离性)
+4. 持久性(通过redolog日志实现)
+
+* MVCC的底层逻辑是如何实现的呢?
+
+
+
+
+
 
    
 
