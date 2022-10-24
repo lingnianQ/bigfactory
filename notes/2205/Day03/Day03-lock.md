@@ -116,6 +116,9 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 2. DB_ROLL_PTR：回滚指针，指向这条记录的上一个版本,用于配合undolog实现数据的回滚.
 3. DB_ROW_ID：隐藏的主键，如果数据表没有主键，那么innodb会自动生成一个row_id，
 
+![img_1.png](img_1.png)
+
+
 * 什么是ReadView？
 
 对于Read Committed和Repeatable Read的隔离级别,都要读取已经提交的事务数据,也就
@@ -125,6 +128,8 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 事务执行操作时,会生成当前事务的ReadView,保存当前事务之前活跃的所有事务id。
 
 * ReadView中包含什么？
+
+![img.png](img.png)
 
 1. m_ids: 截止到当前事务id之前,所有活跃的事务id。
 2. min_trx_id: 记录以上活跃事务id中的最小值。
