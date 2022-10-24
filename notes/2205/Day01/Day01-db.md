@@ -112,7 +112,8 @@ use jsdtn2205
 ```
 
 ```
-create table if not exists student(
+create table if not exists student
+(
 id bigint auto_increment,
 first_name varchar(50) not null comment '学生名字',
 last_name varchar(20) not null comment '学生姓',

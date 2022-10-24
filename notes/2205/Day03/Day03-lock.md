@@ -150,6 +150,7 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 
 * MySQL中的锁
 * MySQL中的MVCC
+* MySQL中的死锁(两个事务可能处于一种相互等待的状态: Regions,Jobs)
 
   
 
