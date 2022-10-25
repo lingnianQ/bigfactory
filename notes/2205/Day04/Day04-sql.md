@@ -352,3 +352,6 @@ select * from employees where salary>5000;
 ```
  show profile for query 1;
 ```
+
+## 总结(Summary)
+https://www.processon.com/view/link/632d82e35653bb1ab0ea0fab
