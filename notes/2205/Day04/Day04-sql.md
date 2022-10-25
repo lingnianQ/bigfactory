@@ -22,13 +22,17 @@
 
 * 查询时尽量避免实用select *; 
 
+```
 1. 这样减少可以数据扫描以及网络开销。
 2. 要尽量使用覆盖索引(索引中已经包含你需要的数据)、减少回表查询。
+```
 
 * 尽量避免在where子句中使用or作为查询条件。
 
+```
 1. or可能会使用索引失效，进而执行全表扫描。
 2. 全表查询的效率相对基于所引查询的效率会比较低。
+```
 
 例如
 ```
@@ -167,12 +171,14 @@ mysql> show global variables like 'slow_query_log_file';
 
 打开日志文件，可以对日志文件中的内容进行分析，常用选项说明：
 
+```
 Time：慢查询发生的时间
 User@Host：客户端用户和IP
 Query_time：查询时间
 Lock_time：等待表锁的时间
 Rows_sent：语句返回的行数
 Rows_examined：语句执行期间从存储引擎读取的行数
+```
 
 说明，后续也可以使用 pt-query-digest 或者 mysqldumpslow 等工具对慢查询日志进行分析。
 
@@ -217,6 +223,7 @@ select 的序列号，有几个 select 就有几个 id，id 的顺序是按 sele
 
 * select_type表示的查询类型有哪些？
 
+```
 1. SIMPLE ： 表示查询语句不包含子查询或 union
 2. PRIMARY：表示此查询是最外层的查询
 3. UNION：表示此查询是 union 的第二个或后续的查询
@@ -225,7 +232,7 @@ select 的序列号，有几个 select 就有几个 id，id 的顺序是按 sele
 6. SUBQUERY：SELECT 子查询语句
 7. DEPENDENT SUBQUERY：SELECT 子查询语句依赖外层查询的结果。
 8. DERIVED: from 子句后的相对比较复杂查询
-
+```
 
 * type表示查询数据的方式。
 
@@ -294,3 +301,4 @@ from hr.employees
 where hire_date>'2000-03-06' and salary>10000;
 ```
 
+16:20下节课
