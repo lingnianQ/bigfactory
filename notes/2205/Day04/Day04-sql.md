@@ -1,14 +1,72 @@
 # MySQL中的SQL优化
+
 ## 课程安排
 
 * 优化原则
 * 慢查询分析
 * 制定优化策略
 
-## 优化原则
+## SQL优化原则
 
 * 减少数据访问量
 * 减少数据计算操作
+
+## SQL优化的方案
+
+* 良好编码的习惯
+* 优秀SQL的编写逻辑
+* 定位需要优化的慢SQL语句
+* 调整优化策略并进行测试。
+
+## 优秀的SQL编写逻辑
+
+* 查询时尽量避免实用select *; 
+
+1. 这样减少可以数据扫描以及网络开销。
+2. 要尽量使用覆盖索引(索引中已经包含你需要的数据)、减少回表查询。
+
+* 尽量避免在where子句中使用or作为查询条件。
+
+1. or可能会使用索引失效，进而执行全表扫描。
+2. 全表查询的效率相对基于所引查询的效率会比较低。
+
+例如
+```
+select first_name,hire_date,salary
+from employees
+where job_id='AD_VP' or salary>15000
+```
+方案优化
+
+```
+create index index_salary on employees(salary);
+
+select first_name,hire_date,salary
+from employees
+where job_id='AD_VP'
+union
+select first_name,hire_date,salary
+from employees
+where salary>15000;
+```
+
+* where 条件中尽量不要出现与null值比较
+
+例如:
+```
+create  index index_commission_pc on employees(commission_pct);
+
+select first_name,salary,commission_pct
+from employees
+where commission_pct is not null;
+```
+可调整为:(表中数据量比较大，但是commission_pct>0的比较少，可以走索引)
+```
+select first_name,salary,commission_pct
+from employees
+where commission_pct>0;
+```
+
 
 ## 慢查询分析
 
