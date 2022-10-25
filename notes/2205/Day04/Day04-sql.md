@@ -89,7 +89,7 @@ insert into regions (region_id,region_name) values (2,'B');
 insert into regions (region_id,region_name) values (1,'A'),(2,'B');
 ```
 
-## 慢查询分析
+## 慢SQL查询分析
 
 * 如何定位慢SQL？
 
