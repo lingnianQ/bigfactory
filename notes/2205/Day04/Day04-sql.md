@@ -210,6 +210,11 @@ Extra: Using where
 1 row in set, 1 warning (0.00 sec)
 ```  
 
+* id
+
+select 的序列号，有几个 select 就有几个 id，id 的顺序是按 select 出现的顺序增长的。
+即：id 越大执行优先级越高，id相同则从上往下执行，id 为NULL最后执行。
+
 * select_type表示的查询类型有哪些？
 
 1. SIMPLE ： 表示查询语句不包含子查询或 union
@@ -219,6 +224,7 @@ Extra: Using where
 5. UNION RESULT：union 的结果
 6. SUBQUERY：SELECT 子查询语句
 7. DEPENDENT SUBQUERY：SELECT 子查询语句依赖外层查询的结果。
+8. DERIVED: from 子句后的相对比较复杂查询
 
 
 * type表示查询数据的方式。
