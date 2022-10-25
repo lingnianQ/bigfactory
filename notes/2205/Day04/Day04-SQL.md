@@ -103,16 +103,13 @@ Rows_examined：语句执行期间从存储引擎读取的行数
 
 * 如何查看正在运行的慢SQL？
 
-有时慢查询正在执行，已经导致数据库负载偏高了，而由于慢查询还没执行完，因此慢查询日志
-还看不到任何语句。此时可以使用 show processlist 命令判断正在执行的慢查询。
-show processlist 显示哪些线程正在运行。如果有 PROCESS 权限，则可以看到所有线程。否则，
-只能看到当前会话的线程。 还有，如果不使用 FULL 关键字，在 info 字段中只显示每个语句的
-前 100 个字符，如果想看语句的全部内容可以使用 full 修饰（show full processlist）。
+1. 使用 show processlist 命令判断正在执行的慢查询。
+2. 使用 show full processlist 看慢查询语句的全部内容可以。
 
 * 如何对慢查询进行分析？
 
-  工欲善其事，必先利其器”，分析慢查询可以通过 explain、show profile 和 trace 等工具来
-  实现。
+工欲善其事，必先利其器”，分析慢查询可以通过 explain、show profile 和 trace 等工具来
+实现。
 
 ## 执行计划(Explain)
 

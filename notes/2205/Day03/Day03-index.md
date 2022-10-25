@@ -5,7 +5,6 @@
 * 索引的定义
 * 索引的类型
 * 索引的应用
-* 查看执行计划(Explain)
 
 ## 索引的定义
 
@@ -126,15 +125,50 @@ InnoDB中，**一张表只有一个聚集索引（即主键索引）**，其他�
 
 ![img_5.png](img_5.png)
 
+```
+select first_name,salary
+from employees
+where employee_id=206
+```
+
 ![img_6.png](img_6.png)
 
+```
+create index index_hire_date on employees(hire_date);
+
+select first_name,salary,email
+from employees
+where hire_date='1987-07-09'
+
+```
+
+
 ![img_8.png](img_8.png)
+
+```
+create index index_hire_date_salary on employees(hire_date,salary);
+
+select first_name,salary,email
+from employees
+where hire_date='1987-07-09' and salary<8000
+
+```
+
 
 * 什么是非聚簇索引？
 非聚簇索引是索引与数据是分离的，索引和数据是单独存储的。MyISAM存储引擎是非聚簇索引。
   
 ![img_7.png](img_7.png)
 
+例如：
+
+```
+[10,0x1001] 0x1001表示记录地址
+[12,0x1002]
+
+0x1001 [10,Jack,J@t.com]
+0x1002 [12,Mike,M@t.com]
+```
 
 * 非聚簇索引存储的是什么？
 非聚簇索引在创建时，存储的是索引值以及索引对应的记录的地址。
