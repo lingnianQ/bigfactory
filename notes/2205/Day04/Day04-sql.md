@@ -241,12 +241,50 @@ type是一个比较重要的一个属性，通过它可以判断出查询是全�
 7. NULL：表示不用访问表，速度最快。
 
 * Extra中值的含义是什么？
-
   Extra 表示很多额外的信息，各种操作会在 Extra 提示相关信息，常见几种如下：
 
-1. Using where 表示查询需要通过索引回表查询数据。
-2. Using index 表示查询需要通过索引，索引就可以满足所需数据。
-3. Using filesort 表示查询出来的结果需要额外排序，数据量小在内存，大的话在磁盘，因此有 Using filesort 建议优化。
-4. Using temprorary 查询使用到了临时表，一般出现于去重、分组等操作。
+1. Using where 表示查询需要通过where条件查询数据(可能没有用到索引)。
+```
+explain
+select *
+from hr.employees
+where salary>10000;
+```
+2. Using index 表示查询需要通过索引，索引就可以满足所需数据(不需要再回表查询)。
 
+```
+create index index_hire_date_salary on employees(hire_date,salary);
+explain
+select employee_id,hire_date,salary
+from hr.employees
+where hire_date>'2000-03-06' and salary>10000;
+```
+
+3. Using filesort 表示查询出来的结果需要额外排序，数据量小在内存，大的话在磁盘，因此有 Using filesort 建议优化。
+```
+explain
+select first_name,hire_date,salary
+from hr.employees
+order by hire_date
+```
+
+4. Using temprorary 查询使用到了临时表，一般出现于去重、分组等操作。
+```
+explain
+select first_name,salary
+from hr.employees
+where first_name like 'A%'
+union
+select first_name,salary
+from hr.employees
+where first_name like 'B%'
+```
+
+5. Using index condition 表示查询的记录，在索引中没有完全覆盖。
+```
+explain
+select employee_id,hire_date,salary,commission_pct
+from hr.employees
+where hire_date>'2000-03-06' and salary>10000;
+```
 
