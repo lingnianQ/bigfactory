@@ -84,16 +84,6 @@ insert into regions (region_id,region_name) values (2,'B');
 ```
 insert into regions (region_id,region_name) values (1,'A'),(2,'B');
 ```
-  
-
-
-
-
-
-
-
-
-
 
 ## 慢查询分析
 
@@ -104,7 +94,7 @@ insert into regions (region_id,region_name) values (1,'A'),(2,'B');
 1. 查看慢查询日志，确定已经执行完的慢查询。
 2. show processlist 查看正在执行的慢查询。
 
-* 如何使用慢查询？
+* 如何进行慢查询分析？
 
 使用慢查询日志一般分为四步：
 1. 开启慢查询日志（一般默认是关闭状态）
@@ -134,7 +124,7 @@ Query OK, 0 rows affected (0.00 sec)
 ```
 
 如果需要定位到慢查询，一般的方法是通过慢查询日志来查询的，
-MySQL 的慢查询日志用来记录在 MySQL 中响应时间超过参数 long_query_time
+MySQ 的慢查询日志用来记录在 MySQL中响应时间超过参数 long_query_time
 （单位秒，默认值 10）设置的值并且扫描记录数不小于 min_examined_row_limit（默认值0）的语句
 
 * long_query_time 的值如何确定呢？
