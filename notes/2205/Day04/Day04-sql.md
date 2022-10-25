@@ -66,6 +66,33 @@ select first_name,salary,commission_pct
 from employees
 where commission_pct>0;
 ```
+* 避免在where子句中使用!=或者<>操作符
+* 使用like查询条件时应尽量避免使用"%" 
+* 避免在查询条件中实用一些内置的SQL函数。
+* 当有多个查询条件、分组条件、排序条件时，尽量使用联合索引(组合索引)
+* 表连接时优先使用内连接(inner join),使用小表驱动大表。
+* 表设计时字段类型能用简单数据类型不用复杂类型。  
+* 清空表中数据可优先使用truncate.
+* 插入多条数据时可考虑使用批量插入。
+
+例如：
+```
+insert into regions (region_id,region_name) values (1,'A');
+insert into regions (region_id,region_name) values (2,'B');
+```
+替换为
+```
+insert into regions (region_id,region_name) values (1,'A'),(2,'B');
+```
+  
+
+
+
+
+
+
+
+
 
 
 ## 慢查询分析
