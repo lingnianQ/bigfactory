@@ -122,7 +122,7 @@
 class SimpleClassLoader extends ClassLoader{
  ...
 }
-
+参考01-java项目中的com.jvm.SimpleClassLoader.
 ```
 * 什么场景下需要自己定义类加载器？
 
@@ -138,6 +138,7 @@ class SimpleClassLoader extends ClassLoader{
 可以，即使是同一个类，但是它的类加载器不同，生成的字节码对象也可以不同。
 ```
 
+## JVM运行时内存区
 
 
 

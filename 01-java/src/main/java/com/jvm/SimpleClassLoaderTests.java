@@ -50,7 +50,7 @@ public class SimpleClassLoaderTests {
         Class<?> aClass1 = classLoader1.loadClass("pkg.Hello");//findClass
 
         SimpleClassLoader classLoader2=
-                new SimpleClassLoader("E:\\TCGBIV\\DEVCODES\\bigfactory\\notes\\");
+                new SimpleClassLoader("E:\\TCGBIV\\DEVCODES\\bigfactory\\notesnotes\\");
         Class<?> aClass2 = classLoader2.loadClass("pkg.Hello");//findClass
         System.out.println(aClass1==aClass2);
     }
