@@ -156,6 +156,7 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 * 为什么使用锁？
 * MySql中的锁式如何分类的？
 * 如何理解MySQL的全局锁、表锁、行锁？
+* 如何理解MySQL中的共享锁、排它锁？  
 * 如何理解MVCC(多版本并发控制)？
 * 如何理解MVCC中的ReadView(一致性快照读视图)？
   
