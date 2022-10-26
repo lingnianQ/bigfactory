@@ -6,13 +6,13 @@ public class EscapeAnalysisTests {
     public static void main(String[] args) {
            long t1=System.currentTimeMillis();
            for(int i=0;i<10000000;i++){
-               alloc();
+               alloc1();
            }
            long t2=System.currentTimeMillis();
            System.out.println(t2-t1);
     }
     //static byte[]b1;
-    static void alloc(){
+    static void alloc1(){
         byte[]b1=new byte[1];
         //b1=new byte[1];//逃逸
     }

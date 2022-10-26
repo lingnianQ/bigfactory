@@ -1,6 +1,7 @@
 package com.jvm;
-//-Xms128m -Xmx128m -XX:+DoEscapeAnalysis -XX:-EliminateAllocations -XX:+PrintGC
+//-Xms128m -Xmx128m -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+PrintGC
 public class EliminateAllocationsTests {
+
     public static void main(String[] args) {
         long t1=System.currentTimeMillis();
         for(int i=0;i<10000000;i++){
@@ -16,6 +17,7 @@ public class EliminateAllocationsTests {
         //int x=10;
         //int y=20;
     }
+
 }
 class Point{
     int x;

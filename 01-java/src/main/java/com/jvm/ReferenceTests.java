@@ -8,12 +8,12 @@ import java.util.List;
 public class ReferenceTests {
     //强引用引用的对象即使是内存溢出都会销毁对象.
     static void doStrongRef(){
-        List<byte[]> list=new ArrayList<>();
+        List<byte[]> cache=new ArrayList<>();
         while(true){
             //b1这里为强引用
             byte[] b1=new byte[1024*1024];
             //list集合对b1指向的对象的引用也是强引用
-            list.add(b1);
+            cache.add(b1);
         }
     }
     //软引用:SoftReference引用对象时为软引用
@@ -27,7 +27,7 @@ public class ReferenceTests {
                 list.add(new SoftReference<byte[]>(b1));
             }
     }
-    //软引用:WeakReference引用对象时为弱引用
+    //弱引用:WeakReference引用对象时为弱引用
     //弱引用引用的对象可能会在GC时,就会将引用的对象销毁.
     static void doWeakRef(){
         List<WeakReference> list=new ArrayList<>();
@@ -56,8 +56,8 @@ public class ReferenceTests {
             //软引用
             //doSoftRef();
             //弱引用
-            //doWeakRef();
+            doWeakRef();
             //虚引用(一般不用)
-            doPhantomRef();
+            //doPhantomRef();
     }
 }
