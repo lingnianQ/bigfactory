@@ -11,9 +11,9 @@ public class EscapeAnalysisTests {
            long t2=System.currentTimeMillis();
            System.out.println(t2-t1);
     }
-    static byte[]b1;
+    //static byte[]b1;
     static void alloc(){
-        //byte[]b1=new byte[1];
-        b1=new byte[1];//逃逸
+        byte[]b1=new byte[1];
+        //b1=new byte[1];//逃逸
     }
 }
