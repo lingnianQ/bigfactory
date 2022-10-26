@@ -302,8 +302,12 @@ Java中为了更好的控制对象的生命周期，提高对象对内存的敏�
 
 案例参考：01-java/src/com.jvm.ReferenceTests
 ```
-
 ## 总结(Summary)
+## 作业
+1. 什么GC、如何判断垃圾对象、有什么GC算法？
+2. ThreadLocal对象有什么用？底层逻辑是怎样的？
+
+
 
 
 
