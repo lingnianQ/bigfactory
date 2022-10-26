@@ -153,10 +153,11 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
    
 ## 总结(Summary)
 
-* MySQL中的锁
-* MySQL中的MVCC
-* MySQL中的死锁(两个事务可能处于一种相互等待的状态: Regions,Jobs)
-
+* 为什么使用锁？
+* MySql中的锁式如何分类的？
+* 如何理解MySQL的全局锁、表锁、行锁？
+* 如何理解MVCC(多版本并发控制)？
+* 如何理解MVCC中的ReadView(一致性快照读视图)？
   
 
 
