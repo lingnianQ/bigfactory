@@ -11,6 +11,7 @@ class ClassB extends ClassA{
         System.out.println("ClassB.static{}");
     }
 }
+//-XX:+TraceClassLoading
 public class ClassLoadTimeTests {
     public static void main(String[] args) throws ClassNotFoundException {
         //1.显式加载
