@@ -17,6 +17,7 @@
 * 优秀SQL的编写逻辑
 * 定位需要优化的慢SQL语句
 * 调整优化策略并进行测试。
+* 按业务进行分库分表。
 
 ## 优秀的SQL编写逻辑
 
@@ -354,4 +355,11 @@ select * from employees where salary>5000;
 ```
 
 ## 总结(Summary)
-https://www.processon.com/view/link/632d82e35653bb1ab0ea0fab
+
+* 思维导图(https://www.processon.com/view/link/632d82e35653bb1ab0ea0fab)
+* SQL调优的原则是什么？(减少数据的访问量以及计算)
+* SQL调优的基本方案？
+* 优秀SQL编写的基本逻辑？
+* 如何定位执行效率比较慢的SQL语句？(慢SQL日志)
+* 如何对慢SQL进行分析？(执行计划-Explain,Profile,....)
+
