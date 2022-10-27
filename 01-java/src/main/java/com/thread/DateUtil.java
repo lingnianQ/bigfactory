@@ -17,6 +17,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * 2)取消共享
  * 3)加锁(悲观锁还是乐观锁)
  *
+ * ThreadLocal是什么？
+ * 线程本地变量，访问这个变量的每个线程都会有这个变量的一个本地拷贝。
+ *
  * ThreadLocal对象的应用
  * 1)可以将某个对象存储到当前线程的ThreadLocalMap中
  * 2)可以从当前线程的ThreadLocalMap中获取到指定对象
@@ -55,5 +58,9 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static void remove(){
+        td.remove();
     }
 }
