@@ -407,41 +407,53 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 
 ![img_12.png](img_12.png)
 
-
 ## JVM如何调优？
 
+```
 1. 为什么调优? (降低系统宕机风险)
 2. 调优的目标？(减少GC次数，提高吞吐量和响应速度，改善用户体验)
 3. 调优的方案？(确定问题;更换CPU,内存; 调内存大小、比例参数、调整GC收集器)
+```
 
 # JVM常用参数分析
 
 ## 检查类加载
 
+```
 -XX:+TraceClassLoading
+```
 
 ## 方法区参数配置
 
+```
 1. -XX:MetaspaceSize
 2. -XX:MaxMetaspaceSize
+```
 
 ## 常用堆参数配置
 
+```
 1. -Xms2048m(设置初始堆大小为2048m)
 2. -Xmx2048m(设置最大堆大小为2048m)
 3. -Xmn1g(设置年轻代大小为1g)
 4. -XX:NewRatio=4(设置年轻代与老年的比例大小)
 5. -XX:SurvivorRatio=4(设置年轻代中的Eden区与Survivor区比值，这里的4表示4:1:1)
 6. -XX:MaxTenuringThreshold=15(年轻代对象转换为老年代对象最大年龄值，默认值15)
+7. ....
+```
 
 ## 常用栈参数配置
 
+```
 1. -Xss128k(设置每个线程的栈大小)
+```
 
 ## GC日志参数配置
 
+```
 1. -XX:+PrintGC
 2. -XX:+PrintGCDetail
+```
 
 
 ## 垃圾回收器参数配置
