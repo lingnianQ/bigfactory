@@ -371,6 +371,8 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 2. GC时所有正在执行的业务的线程都要暂停(Stop The World - STW)
 3. 新生代使用标记复制算法，老年代使用标记整理算法。
 
+> 应用：-XX:+UseSerialGC
+
 ![img_9.png](img_9.png)
 
 ## Parallel收集器的特点？
@@ -379,6 +381,8 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 2. GC时所有正在执行的业务线程都要暂停(Stop The World - STW)
 3. 新生代使用标记复制算法，老年代使用标记整理算法。
 
+> 应用：-XX:+UseParallelGC
+
 ![img_10.png](img_10.png)
 
 ## CMS(Concurrent Mark and Sweep)收集器特点？
@@ -386,6 +390,8 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 1. 内部有多个线程进行垃圾回收，可以利用多核CPU优势进行并行GC操作，可以减少GC暂停时间。
 2. 用户线程和GC线程可以并发执行。
 3. 新生代使用标记复制算法，老年代使用标记清除算法(不整理内存，响应速度会更快)。
+
+> 应用：-XX:+UseConcMarkSweepGC
 
 ![img_11.png](img_11.png)
 
@@ -397,7 +403,73 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 4. 可以在吞吐量和响应时间上达到一种相对的平衡。
 5. 年轻代使用标记复制算法，老年代使用标记整理算法。
 
+> 应用：-XX:+UseG1GC
+
 ![img_12.png](img_12.png)
+
+
+## JVM如何调优？
+
+1. 为什么调优? (降低系统宕机风险)
+2. 调优的目标？(减少GC次数，提高吞吐量和响应速度，改善用户体验)
+3. 调优的方案？(确定问题;更换CPU,内存; 调内存大小、比例参数、调整GC收集器)
+
+# JVM常用参数分析
+
+## 检查类加载
+
+-XX:+TraceClassLoading
+
+## 方法区参数配置
+
+1. -XX:MetaspaceSize
+2. -XX:MaxMetaspaceSize
+
+## 常用堆参数配置
+
+1. -Xms2048m(设置初始堆大小为2048m)
+2. -Xmx2048m(设置最大堆大小为2048m)
+3. -Xmn1g(设置年轻代大小为1g)
+4. -XX:NewRatio=4(设置年轻代与老年的比例大小)
+5. -XX:SurvivorRatio=4(设置年轻代中的Eden区与Survivor区比值，这里的4表示4:1:1)
+6. -XX:MaxTenuringThreshold=15(年轻代对象转换为老年代对象最大年龄值，默认值15)
+
+## 常用栈参数配置
+
+1. -Xss128k(设置每个线程的栈大小)
+
+## GC日志参数配置
+
+1. -XX:+PrintGC
+2. -XX:+PrintGCDetail
+
+
+## 垃圾回收器参数配置
+
+1. Serial垃圾收集器（新生代）
+```
+开启：-XX:+UseSerialGC
+关闭：-XX:-UseSerialGC
+```
+
+2. Parallel垃圾收集器（老年代）
+```
+开启 -XX:+UseParallelGC
+关闭 -XX:-UseParallelGC
+```
+
+3. CMS垃圾收集器（老年代）
+```
+开启 -XX:+UseConcMarkSweepGC
+关闭 -XX:-UseConcMarkSweepGC
+```
+
+4. G1垃圾收集器
+```
+开启 -XX:+UseG1GC
+关闭 -XX:-UseG1GC
+```
+
 
 
 
