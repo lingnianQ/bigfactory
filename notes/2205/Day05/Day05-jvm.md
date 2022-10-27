@@ -469,7 +469,7 @@ GC(Garbage Collection)称之为垃圾回收，在JVM的执行引擎中自带这�
 开启 -XX:+UseG1GC
 关闭 -XX:-UseG1GC
 ```
-
+15：30下节课
 
 
 
