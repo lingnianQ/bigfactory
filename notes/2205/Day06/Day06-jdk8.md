@@ -20,7 +20,7 @@ JDK8中对接口规范进行了新的定义，允许在接口中定义默认方�
 JDK8中为了对接口业务进行扩展，但又不影响实现类，提供了默认方法。此类型的方法实用default关键字修饰，可以有方法体的实现。例如list接口中的sort方法：
 
 
-```java
+```
  default void sort(Comparator<? super E> c) {
         Object[] a = this.toArray();
         Arrays.sort(a, (Comparator) c);
@@ -30,6 +30,7 @@ JDK8中为了对接口业务进行扩展，但又不影响实现类，提供了�
             i.set((E) e);
         }
     }
+
 ```
 
 说明：一个接口中可以有多个默认方法，在实现类中可以有选择的对方法进行重写。例如：
@@ -132,7 +133,7 @@ Java中的Lambda为JAVA编程注入了函数式编程思想，在迭代操作，
 最简单的Lambda表达式可由逗号分隔的参数列表、->符号和语句块组成，例如：
 
 
-```java
+```
 
 Arrays.asList( "a", "b", "d" )
 		      .forEach( e -> System.out.println( e ) );
@@ -141,7 +142,7 @@ Arrays.asList( "a", "b", "d" )
 
 在上面这个代码中的参数e的类型是由编译器推理得出的，你也可以显式指定该参数的类型，例如：
 
-```java
+```
 Arrays.asList( "a", "b", "d" )
 		      .forEach( ( String e ) -> System.out.println( e ) );
 ```
@@ -149,7 +150,7 @@ Arrays.asList( "a", "b", "d" )
 
 如果Lambda表达式需要更复杂的语句块，则可以使用花括号将该语句块括起来，类似于Java中的函数体，例如：
 
-```java
+```
 Arrays.asList( "a", "b", "d" ).forEach( e -> {
 	    System.out.print( e );
 	    System.out.println( );
@@ -165,24 +166,24 @@ lambda 表达式可以让代码编写更加简洁。我们先来思考下普通�
 *	代码块。
 在lambda 表达式应用过程中，你应该也注意到了，一般只有两个元素：
 
-```java
+```
 (parameter list) -> body
 ```
 其中“->” 将参数列表与函数主体分离，旨在对给定参数进行处理。函数的主体可能是一条或多条语句。例如其常见结构如下：
 
-```java
+```
 () -> statement
 ```
 
-```java
+```
  arg -> statement 
 ```
 
-```java
+```
  (arg1, arg2, ...) -> {  body-block }
 ```
 
-```java
+```
  (Type1 arg1, Type2 arg2, ...) -> { 
 method-body-block;return value; 
 }
@@ -191,12 +192,12 @@ method-body-block;return value;
 Lambda表达式有返回值，返回值的类型也由编译器推理得出。如果Lambda表达式中的语句块只有一行，则可以不用使用return语句，下列两个代码片段效果相同：
 
 
-```java
+```
 Arrays.asList( "a", "b", "d" )
 		   .sort( ( e1, e2 ) -> e1.compareTo( e2 ) );
 ```
 
-```java
+```
 Arrays.asList( "a", "b", "d" ).sort( ( e1, e2 ) -> {
 		    int result = e1.compareTo( e2 );
 		    return result;
@@ -209,7 +210,7 @@ Arrays.asList( "a", "b", "d" ).sort( ( e1, e2 ) -> {
 案例1：构建一个线程对象，执行Runnable类型的任务。
 传统方式的实现，其关键代码如下：
 
-```java
+```
 new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -220,7 +221,7 @@ new Thread(new Runnable() {
 
 基于JDK8中的Lambda表达式实现方式，对传统方式线程对象的创建进行简化，其关键代码如下：
 
-```java
+```
 new Thread(()->{
 	System.out.println("hello");
 }).start();
@@ -230,14 +231,14 @@ new Thread(()->{
 
 定义一字符串数组，然后对字符串数组中的内容，按字符串元素的长度对其进行排序。代码如下：
 
-```java
+```
 String[] strArray= {"abcd","ab","abc"};	
 ```
 
 在JDK8之前传统的实现方案，基于Arrays类对数组中的元素进行排序操作，关
 键代码实现如下：
 
-```java
+```
 Arrays.sort(strArray,new Comparator<String>() {
 			@Override
 			public int compare(String o1, String o2) {
@@ -263,18 +264,18 @@ Arrays.sort(strArray, (s1, s2) -> s1.length() - s2.length());
 方法引用是一种更简洁易懂的Lambda表达式，操作符是双冒号"::"，也可以将方法引用定义一个list集合，然后基于Lambda表达式迭代集合中的内容进行输出，关键代码如下：
 
 
-```java
+```
 List<String> list = Arrays.asList("a","b","c");
 ```
 
-```java
+```
 list.forEach(str -> System.out.println(str));
 ```
 
 
 基于方法引用的方式，输出list集合中的具体内容的，然后与传统Lambda表达式方式，进行对比分析，关键代码如下：
 
-```java
+```
 list.forEach(System.out::println);
 ```
 
@@ -317,7 +318,7 @@ public class TestConstructorMethodRef01 {
 格式：ClassName::static_method。
 
 
-```java
+```
 package com.cy.java8.methodref;
 import java.util.function.Function;
 public class TestClassMethodRef01 {
@@ -347,7 +348,7 @@ public class TestClassMethodRef01 {
 练习：比较两个整数大小。
 
 
-```java
+```
 Comparator<Integer> com=Integer::compare;
 
 System.out.println(com.compare(39, 20));
@@ -390,7 +391,7 @@ public class TestClassInstanceMethodRef01 {
 练习：堆数组中内容进行排序，通过方法引用简化编写。
 
 
-```java
+```
 Arrays.sort(strArray,(s1,s2)->s1.compareToIgnoreCase(s2));
 Arrays.sort(strArray, String::compareToIgnoreCase);
 ```
@@ -401,7 +402,7 @@ Arrays.sort(strArray, String::compareToIgnoreCase);
 
 格式：对象实例::method，方法不能带参数。
 
-```java
+```
 public class TestObjectInstanceMethodRef01 {
 
 	public static void main(String[] args) {
@@ -427,7 +428,7 @@ public class TestObjectInstanceMethodRef01 {
 练习:获取集合中元素的个数。
 
 
-```java
+```
 List<Integer> list=Arrays.asList(10,20);
 Supplier<Integer> supplier=(list::size);
 System.out.println(supplier.get());
@@ -450,7 +451,7 @@ Stream对象的操作过程，可通过下图进行进一步分析。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210708192049974.png)
 Steam对象简易应用，代码如下：
 
-```java
+```
 List<Integer> list = Arrays.asList(3, 2, 12, 5, 6, 11, 13);
 long count = list.stream()
                  .filter(i -> i % 2 == 0)
@@ -471,7 +472,7 @@ Stream对象的创建，常见方式有如下几种：
 
 Stream对象创建，案例分析如下：
 
-```java
+```
 Collection<Integer> col=new ArrayList<>();
       ...
 	Stream<Integer> s1=col.stream();
@@ -492,14 +493,14 @@ Collection<Integer> col=new ArrayList<>();
 Stream 对象创建以后可以基于业务执行一些中间操作，但这些操作的结果需要借助终止操作进行输出，案例分析如下：
 初始条件：给定list集合作为Stream操作的对象，代码如下：
 
-```java
+```
 List<Integer> list=Arrays.asList(100,101,102,200);
 ```
 
 
 对数据进行过滤：
 
-```java
+```
 //输出集合中所有的偶数
 //1.创建流
 Stream<Integer> s1=list.stream();
@@ -514,7 +515,7 @@ list.stream().filter(n->n%2==0).forEach(System.out::println);
 
 限定操作(limit):
 
-```java
+```
 list.stream()
 .filter(n->n%2==0)
 .limit(2)
@@ -524,7 +525,7 @@ list.stream()
 
 跳过操作(skip)：
 
-```java
+```
 list.stream()
 .filter(n->n%2==0)
 .skip(2)
@@ -534,7 +535,7 @@ list.stream()
 
 去重操作(distinct)：
 
-```java
+```
 list.stream()
 .distinct()
 .forEach(System.out::println);
@@ -542,14 +543,14 @@ list.stream()
 
 排序操作(sorted)：底层基于内部比较器Comparable或外部Comparator比较器进行比对。
 
-```java
+```
 list.stream()
 .sorted()
 .forEach(System.out::println);
 ```
 
 
-```java
+```
 list.stream()
 .sorted((s1,s2)->{//Comparator
 				return s1-s2;
@@ -559,7 +560,7 @@ list.stream()
 
 映射操作(map)：
 
-```java
+```
 List<String> list=Arrays.asList("a","bc","def");
 
 list.stream()
@@ -577,14 +578,14 @@ list.stream()
 
 Stream终止操作是Stream的结束操作，案例分析如下：
 
-```java
+```
 List<String> list=Arrays.asList("a","bc","def");
 list.stream()
 .map((x)->x.toUpperCase())
 .forEach(System.out::println);
 ```
 
-```java
+```
 list.stream()
 .map((x)->x.length())
 .forEach(System.out::println);
@@ -593,14 +594,14 @@ list.stream()
 
 案例：初始条件定义，给定一个list集合：
 
-```java
+```
 List<Integer> list=Arrays.asList(10,11,12,13,14,15);
 ```
 
 
 match操作：
 
-```java
+```
 boolean flag=list.stream().allMatch((x)->x%2==0);
 System.out.println(flag);
 flag=list.stream().anyMatch((x)->x%2==0);
@@ -612,7 +613,7 @@ System.out.println(flag);
 
 find操作：
 
-```java
+```
 Optional<Integer> optional=list.stream().sorted().findFirst();
 System.out.println(optional.get());
 optional=list.parallelStream().filter((x)->x%2!=0).findAny();
@@ -622,7 +623,7 @@ System.out.println(optional.get());
 
 count操作：
 
-```java
+```
 long count=list.stream().count();
 System.out.println(count);
 ```
@@ -630,7 +631,7 @@ System.out.println(count);
 
 求最大，最小值：
 
-```java
+```
 optional=list.stream().max((x,y)->{return x-y;});
 System.out.println(optional.get());
 optional=list.stream().min((x,y)->{return x-y;});
@@ -640,7 +641,7 @@ System.out.println(optional.get());
 
 forEach迭代操作：
 
-```java
+```
 list.stream().forEach(System.out::println);
 ```
 
@@ -650,7 +651,7 @@ Reduce(规约)操作：
 
 //计算集合中所有元素的和，其中第一个参数0为初始值，然后与后面每个值累加
 
-```java
+```
 Integer sum=list.stream().reduce(0,(x,y)->{return x+y;});
 System.out.println(sum);
 ```
@@ -658,7 +659,7 @@ System.out.println(sum);
 
 Collector(收集)操作：
 
-```java
+```
 List<Integer> result=
 list.stream()
 .map(x->x*2)
@@ -686,7 +687,7 @@ System.out.println(map);
 ##	reduce操作
 案例1：计算多个整数的和。
 
-```java
+```
 static void doTestReduce01() {
 		 List<Integer> list = Arrays.asList(1,2,3,4,5,6);
 		 Optional<Integer> count = 
@@ -698,7 +699,7 @@ static void doTestReduce01() {
 
 案例2：计算多个整数乘积，然后再乘以2。
 
-```java
+```
 static void doTestReduce02() {
 		List<Integer> list = Arrays.asList(1,2,3,4,5,6);
 		Integer count = list.stream().reduce(2, (a, b) -> (a * b));
@@ -709,7 +710,7 @@ static void doTestReduce02() {
 案例3：计算多个整数的和，假如超出范围，则对其进行类型转换。.
 案例1和2的缺点在于返回的数据都只能和 Stream 流中元素类型一致，但假如求和或乘积之后的数值超过了 Integer 能够表示的范围怎么办？例如，需要使用 Long 类型接收，这就用到了我们下面reduce() 方法的应用形式了。
 
-```java
+```
 static void doTestReduce03() {
 		List<Integer> list = 
  Arrays.asList(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -723,7 +724,7 @@ static void doTestReduce03() {
 ##	collect操作实现
 获取指定目录下所有目录文件的文件名。
 
-```java
+```
 List<String> allDirNames =
     Arrays.stream(new File("d:\\")
           .listFiles())
@@ -738,7 +739,7 @@ System.out.println(allDirNames);
 并行流应用的目的主要借助多核处理器优势，提高的操作性能。
 
 
-```java
+```
  public static void main (String[] args) {
         String[] strings =  {"1", "2", "3", "4", "5"};
         doPrint(Arrays.stream(strings).sequential());
@@ -766,7 +767,7 @@ Java8中的时间处理API定义在java.time包中，这些API具备不可变且
 
 > Instant 时间戳对象应用，默认是0时区，比北京少8个时区。
 
-```java
+```
 //获取瞬时对象(当前时间年月日时分秒),Instant是绝对时间，没有时区的概念
 Instant instant1 ==Instant.now();//Clock.systemUTC().instant();
 System.out.println(instant1);
@@ -795,7 +796,7 @@ Instant start = Instant.now();
 > LocalDate 日期对象，不包含具体时间。
 
 
-```java
+```
 LocalDate ld1=LocalDate.now();
 System.out.println(ld1);
 LocalDate ld2 = LocalDate.of(2019, Month.JANUARY, 8);
@@ -808,7 +809,7 @@ System.out.println(ld3);
 > LocalTime 时间对象，不包含日期。
 
 
-```java
+```
 LocalTime lt1=LocalTime.now();
 System.out.println(lt1);
 LocalTime lt2=LocalTime.now(ZoneId.systemDefault());
@@ -821,7 +822,7 @@ System.out.println(t);
 
 > LocalDateTime  包含了日期和时间对象，没有时区信息。
 
-```java
+```
 LocalDateTime ldt02 = 
 LocalDateTime.of(2019, Month.DECEMBER, 31, 23, 59, 59);
 System.out.println(ldt02);//2019-12-31T23:59:59
@@ -833,7 +834,7 @@ System.out.println(dayOfWeek);      // WEDNESDAY
 
 > ZoneDateTime  包含时区的完整日期时间对象，偏移量以UTC时间为基准。
 
-```java
+```
 ZonedDateTime zdt01=ZonedDateTime.now();
 System.out.println(zdt01);
 ZoneId zd01=TimeZone.getDefault().toZoneId();
@@ -844,7 +845,7 @@ System.out.println(zd01);
 ##	应用案例增强分析
 项目中我们经常会用到日期类型转换，在JDK8中的实现方式如下：
 
-```java
+```
 LocalDateTime ld4 = 
 LocalDateTime.parse("2019/12/12 12:12:12",
 DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
