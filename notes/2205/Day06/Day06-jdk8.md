@@ -392,7 +392,7 @@ public class TestClassInstanceMethodRef01 {
 ```
 
 
-练习：堆数组中内容进行排序，通过方法引用简化编写。
+练习：对数组中内容进行排序，通过方法引用简化编写。
 
 
 ```
@@ -516,7 +516,6 @@ s2.forEach(System.out::println);
 list.stream().filter(n->n%2==0).forEach(System.out::println);
 ```
 
-
 限定操作(limit):
 
 ```
@@ -526,7 +525,6 @@ list.stream()
 .forEach(System.out::println);
 ```
 
-
 跳过操作(skip)：
 
 ```
@@ -535,7 +533,6 @@ list.stream()
 .skip(2)
 .forEach(System.out::println);
 ```
-
 
 去重操作(distinct)：
 
