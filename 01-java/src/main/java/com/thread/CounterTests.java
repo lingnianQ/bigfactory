@@ -27,14 +27,13 @@ class Counter02{
         return count;
     }
 }
-
 class Counter03 {
-    AtomicLong atomicLong=new AtomicLong(1);//底层CAS(比较和交换)
+    AtomicLong atomicLong=new AtomicLong(1);//乐观锁：底层CAS(比较和交换)
     long count(){
         long andIncrement = atomicLong.getAndIncrement();
         return andIncrement;
     }
-}
+}//16:10
 
 
 public class CounterTests {
