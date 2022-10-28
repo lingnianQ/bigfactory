@@ -304,13 +304,12 @@ Condition 是一个用于多线程间协同的工具类，基于此类可以方�
 
 > Condition 类应用说明
 
-1)	基于Lock对象获取Condition对象
-2)	基于Condition对象的await()/signal()/signalall()方法实现线程阻塞或唤醒。
-
+1.	基于Lock对象获取Condition对象
+2.	基于Condition对象的await()/signal()/signalall()方法实现线程阻塞或唤醒。
 
 > Condition类对象的应用案例实现：
 
-手动实现阻塞式队列，并基于wait()/notifyAll()方法实现实现线程在队列上的通讯。
+手动实现阻塞式队列，并基于await()/signal()/signalall()方法实现线程在队列上的通讯。
 
 ```java
 /**
@@ -340,10 +339,6 @@ public class BlockContainer<T> {//类泛型
     /**
      * 生产者线程通过put方法向容器放数据
      * 数据永远放在size位置
-     * 说明：实例方法内部的this永远指向
-     * 调用此方法的当前对象(当前实例)
-     * 注意：静态方法中没有this，this只能
-     * 应用在实例方法，构造方法，实例代码块中
      */
     public void put(T t) {//同步锁：this
         System.out.println("put");
