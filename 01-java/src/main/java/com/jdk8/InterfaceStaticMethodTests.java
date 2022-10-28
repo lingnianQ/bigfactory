@@ -10,7 +10,7 @@ class ClassB implements IB{
         System.out.println("ClassB.doMethod()");
     }
 }
-public interface InterfaceStaticMethodTests {
+public class InterfaceStaticMethodTests {
     public static void main(String[] args) {
         IB b1=new ClassB();
         ClassB b2=new ClassB();

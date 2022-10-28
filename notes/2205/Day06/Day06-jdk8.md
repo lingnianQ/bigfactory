@@ -80,10 +80,9 @@ public interface Comparator<T> {
 ##	应用案例增强分析及实现
 在JDK中的java.util.function包中定义了大量函数式接口。常用的有如下几个：
 
-
-
 > 消费型接口。
 
+特点：接口中的方法只负责接收参数，不负责返回具体值(方法返回值类型是void)。
 ```java
 @FunctionalInterface
 public interface Consumer<T> {
@@ -93,6 +92,8 @@ public interface Consumer<T> {
 
 
 > 函数式接口。
+
+特点：接口方法不仅仅可以接收参数的输入，还可以给出一个具体的返回值。
 
 ```java
 @FunctionalInterface
@@ -105,6 +106,8 @@ public interface Function<T, R> {
 
 > 	判定式接口。
 
+判断式接口：基于你传入的参数，经过处理给出一个boolean类型的结果。
+
 ```java
 @FunctionalInterface
 public interface Predicate<T> {
@@ -112,9 +115,9 @@ public interface Predicate<T> {
 }
 ```
 
-
-
 > 供给式接口。
+
+特点：方法不需要接收参数，只需要返回结果。
 
 ```java
 @FunctionalInterface
@@ -126,8 +129,10 @@ public interface Supplier<T> {
 # JDK8中Lambda 表达式应用
 ##	概述
 Java中的Lambda表达式是JDK8中的一种新特性，它允许我们将一段代码（这段代码可以理解为一个接口的实现）当成参数传递给某个方法，然后进行业务处理，这种方式更像是一种函数式编程风格，可以让代码结构更简洁，开发效率更高。
-3.2	应用场景
+
+##	应用场景
 Java中的Lambda为JAVA编程注入了函数式编程思想，在迭代操作，映射操作，聚合操作等很多方面的实现上做出了很大努力。并从语法角度简化了程序员对特定代码的编写，通过底层的类型推断，方法引用等特性让代码表现的更加优雅。现在已成为我们编程过程中常用的一种编程方式。
+
 ##	快速入门分析
 最简单的Lambda表达式可由逗号分隔的参数列表、->符号和语句块组成，例如：
 
