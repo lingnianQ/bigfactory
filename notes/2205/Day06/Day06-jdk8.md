@@ -856,9 +856,9 @@ System.out.println(ld4);
 
 #	JDK8新特性总结
 ##	重难点分析
-*	接口新特性?(默认方法，函数式接口，静态方法)
-*	Lambda表达式?(函数式，简化语法，开发效率)
-*	方法引用(MethodReference)
+*	接口新特性?(默认方法-default，函数式接口-@FuntionInterface，静态方法)
+*	Lambda表达式?(函数式(->)，简化语法，开发效率)
+*	方法引用(MethodReference-::)
 *	Stream应用实践分析?（数据操作更方便，创建，中间操作，终止操作）
 *	常用新的日期对象应用?（灵活，安全，准确）
 
