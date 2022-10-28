@@ -573,8 +573,6 @@ list.stream()
 .forEach(System.out::println);
 ```
 
-
-
 > Stream终止操作。
 
 Stream终止操作是Stream的结束操作，案例分析如下：

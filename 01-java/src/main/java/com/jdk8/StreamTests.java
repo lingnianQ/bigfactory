@@ -3,6 +3,9 @@ package com.jdk8;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -47,10 +50,67 @@ public class StreamTests {
               .map(x->x.toUpperCase())//转换为大写
               .forEach(System.out::println);
     }
+    //终止操作match
+    static void doTest05(){
+        List<Integer> list=Arrays.asList(10,11,12,13,14,15);
+        boolean allMatch = list.stream()
+                .allMatch(x -> x % 2 == 0);
+        boolean anyMatch = list.stream().anyMatch(x -> x % 2 == 0);
+        boolean noneMatch = list.stream().noneMatch(x -> x > 50);
+        System.out.println(allMatch);
+        System.out.println(anyMatch);
+        System.out.println(noneMatch);
+    }
+
+    //终止操作find操作
+    static void doTest06(){
+        List<Integer> list=Arrays.asList(19,10,11,12,13,14,15);
+        Optional<Integer> first = list.stream().sorted().findFirst();
+        System.out.println(first.get());
+
+        Optional<Integer> any =
+                list.parallelStream().sorted().findAny();
+        System.out.println(any.get());
+    }
+    //count,max终止操作
+    static void doTest07() {
+        List<Integer> list = Arrays.asList(19, 10, 11, 12, 13, 14, 15);
+        long count = list.stream().count();
+        System.out.println(count);
+        Optional<Integer> max = list.stream().max((x, y) -> {
+            return x - y;
+        });
+        System.out.println(max.get());
+    }
+    //reduce(缩减)终止操作
+    static void doTest08() {
+        List<Integer> list = Arrays.asList(10, 20, 30,40);
+        Integer reduce = list.stream().reduce(0, (x, y) -> {
+            return x + y;
+        });
+        System.out.println(reduce);
+    }
+    //Collector终止操作
+    static void doTest09() {
+        List<Integer> list = Arrays.asList(10, 20, 30,40);
+        List<Integer> collect =
+                 list.stream()
+                .map(x -> x * 2)
+                .collect(Collectors.toList());
+        System.out.println(collect);
+    }
+
+
 
     public static void main(String[] args) {
        // doTest01();
       //  doTest03();
-        doTest04();
+      //  doTest04();
+       // doTest05();
+       // doTest06();
+
+        //doTest07();
+       // doTest08();
+        doTest09();
     }
 }
