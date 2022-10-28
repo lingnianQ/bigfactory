@@ -1,6 +1,7 @@
 package com.jdk8;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -22,7 +23,18 @@ public class LambdaTests {
 
         asList.forEach(s-> System.out.println(s));
     }
+
+    static void doTest02(){
+        String[] strArray= {"abcd","ab","abc"};
+        Arrays.sort(strArray, (o1, o2) -> {
+                     return o1.length() - o2.length();
+                }
+        );
+        System.out.println(Arrays.toString(strArray));
+    }
+
     public static void main(String[] args) {
-       doTest01();
+      // doTest01();
+        doTest02();
     }
 }
