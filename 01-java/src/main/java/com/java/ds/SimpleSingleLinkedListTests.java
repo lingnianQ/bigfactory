@@ -1,5 +1,7 @@
 package com.java.ds;
 
+import java.util.NoSuchElementException;
+
 /**
  * 单项链表
  */
@@ -60,10 +62,7 @@ class SimpleSingleLinkedList{
         if(index==size){addLast(data);return;}
         //4.假如index的值在0~size之间,在将数据添加到index位置
         //4.1查找index位置的上一个节点
-        Node preNode=head;
-        for(int i=0;i<index-1;i++){
-            preNode=preNode.next;
-        }
+        Node preNode=node(index-1);
         //4.2构建新的节点
         Node newNode= new Node(data);
         //4.3将新节点插入到index位置
@@ -73,6 +72,47 @@ class SimpleSingleLinkedList{
         size++;
     }
 
+    /**查找指定位置的节点*/
+    Node node(int pos){
+        Node node=head;
+        for(int i=0;i<pos;i++){
+            node=node.next;
+        }
+        return node;
+    }
+
+    public void removeFirst(){
+        if(size==0||head==null)
+            throw new NoSuchElementException();
+        head=head.next;
+        size--;
+    }
+    public void removeLast(){
+        if(size==0||head==null)
+            throw new NoSuchElementException();
+        if(size==1){
+            head=null;
+        }else{
+            Node preNode=node(size-2);//最后一个节点位置为size-1
+            preNode.next=null;
+        }
+        size--;
+    }
+    public void removeNode(int index){
+        if(index<0||index>=size)
+            throw new IndexOutOfBoundsException();
+        if(index==0){
+            removeFirst();
+            return;
+        }
+        if(index==size-1){
+            removeLast();
+            return;
+        }
+        Node preNode=node(index-1);
+        preNode.next=preNode.next.next;
+        size--;
+    }
 
     @Override
     public String toString() {
@@ -100,7 +140,11 @@ public class SimpleSingleLinkedListTests {
         System.out.println(list);//dcbae
         list.add(2,"F");
         System.out.println(list);//dcfbae
-
+        list.removeFirst();
+        list.removeLast();
+        System.out.println(list);//cfba
+        list.removeNode(1);
+        System.out.println(list);
 
     }
 }
