@@ -1,5 +1,8 @@
 package com.java.ds;
 
+/**
+ * 单项链表
+ */
 class SimpleSingleLinkedList{
     /**头节点*/
     private Node head;
@@ -13,6 +16,7 @@ class SimpleSingleLinkedList{
             this.data=data;
         }
     }
+
     /**在头部位置添加元素*/
     public void addFirst(Object data){
         //1.构建节点对象
@@ -41,6 +45,35 @@ class SimpleSingleLinkedList{
         size++;
     }
 
+    /**
+     * 将data添加到链表的index位置
+     * @param index
+     * @param data
+     */
+    public void add(int index,Object data){
+        //1.判断index是否越界
+        if(index<0||index>size)
+            throw new IndexOutOfBoundsException();
+        //2.假如index的值0，应该就数据作为头节点
+        if(index==0){addFirst(data);return;}
+        //3.假如index的值为size，则将数据添加到尾节点
+        if(index==size){addLast(data);return;}
+        //4.假如index的值在0~size之间,在将数据添加到index位置
+        //4.1查找index位置的上一个节点
+        Node preNode=head;
+        for(int i=0;i<index-1;i++){
+            preNode=preNode.next;
+        }
+        //4.2构建新的节点
+        Node newNode= new Node(data);
+        //4.3将新节点插入到index位置
+        newNode.next=preNode.next;
+        preNode.next=newNode;
+        //5.更新有效元素个数
+        size++;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder sb=new StringBuilder("[");
@@ -62,9 +95,12 @@ public class SimpleSingleLinkedListTests {
         list.addFirst("B");
         list.addFirst("C");
         list.addFirst("D");
-        System.out.println(list);//dbca
+        System.out.println(list);//dcba
         list.addLast("E");
-        System.out.println(list);//dbcae
+        System.out.println(list);//dcbae
+        list.add(2,"F");
+        System.out.println(list);//dcfbae
+
 
     }
 }
