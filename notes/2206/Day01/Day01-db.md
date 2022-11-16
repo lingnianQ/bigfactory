@@ -301,4 +301,15 @@ foreign key (location_id) references locations(id)
 
 # 总结(Summary)
 
+## 常见FAQ分析
+
+* 一个SQL的查询流程是怎样的？
+
+https://www.processon.com/view/link/6374a2f20791290b4b9e0628
+
+* 一个SQL语句的更新流程是怎样的？
+
+https://www.processon.com/view/link/632da9f65653bb1ab0ea4c00
+
+
 
