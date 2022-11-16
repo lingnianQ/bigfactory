@@ -7,6 +7,10 @@
 * 索引的设计
 * 数据库中的事务、锁应用
 
+## 思维导图
+
+https://www.processon.com/view/link/632d82e35653bb1ab0ea0fab
+
 ## 数据库常见术语
 
 * DB (Database):数据库
