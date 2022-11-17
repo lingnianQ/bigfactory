@@ -118,14 +118,15 @@ use jsdtn2205
 ```
 create table if not exists student
 (
-id bigint auto_increment,
-first_name varchar(50) not null comment '学生名字',
-last_name varchar(20) not null comment '学生姓',
-phone varchar(15) not null comment '手机号',
-birthday date comment '出生日期',
-create_time datetime default current_timestamp comment '注册日期',
-primary key (id),
-unique key (phone)
+    id bigint auto_increment,
+    first_name varchar(50) not null comment '学生名字',
+    last_name varchar(20) not null comment '学生姓',
+    phone varchar(15)  not null comment '手机号',
+    email varchar(50) unique default '' comment '邮箱',
+    birthday date comment '出生日期',
+    create_time datetime default current_timestamp comment '注册日期',
+    primary key (id),
+    unique key (phone)
 )engine = InnoDB character set utf8mb4;
 ```
 
@@ -155,12 +156,13 @@ unique key (phone)
 案例应用(创建课程分类表category,课程表course并相关约束进行应用)
 
 ```
-drop table if exists category;
-
-create table if not exists category(
+create table if not exists category
+(
 id int auto_increment comment '主键值',
 category_name varchar(100) not null comment '分类名称',
-primary key (id)
+parent_id int,
+primary key (id),
+foreign key (parent_id) references category (id)
 )engine=InnoDB character set utf8mb4;
 
 ```
@@ -211,19 +213,20 @@ create table teacher(
 ```
 在teacher表的设计中，对于name字段其实可再分为姓和名，按照第一范式的的定义来讲，
 这个设计不满足第一范式，我们可以将这个设计调整为如下方案：
+
 ```
 create table teacher
 (
    id int auto_increment,
-   first_name varchar(50) not null comment '名',
-   last_name varchar(50) not null comment '姓',
+   first_name varchar(50) not null comment '姓',
+   last_name varchar(50) not null comment '名',
    primary key (id)
 )engine=InnoDB character set utf8mb4;
 ```
 
 2. 分析如下表的设计是否满足第二范式？
 
-创建一张成绩表，代码设计如下：
+创建一张成绩表(Score)，代码设计如下：
 
 ```
 create table if not exists score(
@@ -231,7 +234,7 @@ create table if not exists score(
    cid bigint comment '课程编号',
    cname varchar(50) not null comment '课程名',
    score int not null comment '成绩',
-   primary key (sid,cid)
+   primary key (sid,cid) comment '复合主键’
 )engine=InnoDB character set utf8mb4;
 ```
 此表设计不满足第二范式，这里表中的cname依赖于cid，但不依赖于sid，
@@ -246,6 +249,7 @@ create table if not exists score
    primary key (sid,cid)
 )engine=InnoDB character set utf8mb4;
 ```
+
 3. 分析如下设计是否满足第三范式？
 
 创建一个部门表，其代码如下：
