@@ -205,6 +205,7 @@ on e.manager_id=m.employee_id
 ```
 
 
+
 **2)查询雇员206所在部门的部门名称以及这个部门所在的城市?**
 -- 雇员表中有部门名称吗?没有,部门表(departments)中有
 -- 雇员表中有城市名称名称?没有,地址表(locations)中有
@@ -282,9 +283,11 @@ order by 2 desc;
 select first_name,salary,
       (case when salary>=10000 then '偏高'
             when salary>=8000 then '中等'
-            else '偏低' end) level
+            else '偏低' 
+            end) level
 from employees
 ```
+
 **9)统计薪资大于等于10000的人数，小于10000的人数。**
 
 ```
@@ -292,6 +295,13 @@ select  sum(case when salary>=10000 then 1 else 0 end ) '大于等于10000',
         sum(case when salary<10000 then 1 else 0 end ) '小于10000'
 from employees
 ```
+
+```
+select  count(case when salary>=10000 then 1 else null end ) '大于等于10000',
+        count(case when salary<10000 then 1 else null end ) '小于10000'
+from employees;
+```
+
 
 **10)查询雇员表中第二页的数据(每页最多显示10条记录-页面大小)？**
 
@@ -319,8 +329,8 @@ from (
 ```
 select(7)
 from (1)
-join (2)
-on (3)
+join (3)
+on (2)
 where(4)
 group by(5) 
 having(6)
@@ -329,11 +339,10 @@ limit(9)
 ```
 
 **12)说说如下查询返回的结果数是多少?**
-
+雇员表有100条记录，部门表有10条记录
 ```
    select count(*)
    from employees,deparements;
-   
 ```
 返回的结果数为两张表数量的乘积.(这个查询为笛卡尔积)
 
