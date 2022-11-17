@@ -194,6 +194,16 @@ from employees e join employees m
 on e.manager_id=m.employee_id
 where e.employee_id=206
 ```
+方案3：嵌套查询+表关联查询
+
+```
+select m.last_name,m.salary
+from   (select manager_id
+from employees
+where employee_id = 206) e join  employees m
+on e.manager_id=m.employee_id
+```
+
 
 **2)查询雇员206所在部门的部门名称以及这个部门所在的城市?**
 -- 雇员表中有部门名称吗?没有,部门表(departments)中有
