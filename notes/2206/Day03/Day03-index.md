@@ -79,7 +79,7 @@ drop index index_first_last on student;
 
 ## 索引存储结构分析
 
-* MySQL中索引支持哪些存储结果?
+* MySQL中索引支持哪些存储结构?
 
   hash,B+树,...
 
@@ -176,7 +176,17 @@ where hire_date='1987-07-09' and salary<8000
 基于非聚簇索引查询数据时，可以先基于索引找到数据的一个地址，然后基于地址再去查找数据。
 单从索引角度来说，非聚集索引查找速度不如聚集索引，非聚集索引找到索引位置后还需要根据索引找到数据对应的位置
   
-## 总结(Summary)
+# 总结(Summary)
+
+## 课上案例图
+* 二叉查找树/平衡二叉树
+https://www.processon.com/view/link/6377397ef346fb01d411a8cd
+
+* B-树/B+树
+
+https://www.processon.com/diagraming/62a365d2f346fb6b6e097001
+
+## 常见问题分析
 
 * 什么是索引？
 * 为什么使用索引？
