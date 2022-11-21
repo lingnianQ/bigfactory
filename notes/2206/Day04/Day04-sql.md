@@ -13,7 +13,7 @@
 
 ## SQL优化的方案
 
-* 良好编码的习惯
+* 良好SQL编码的习惯
 * 优秀SQL的编写逻辑
 * 定位需要优化的慢SQL语句
 * 调整优化策略并进行测试。
@@ -24,7 +24,7 @@
 * 查询时尽量避免实用select *; 
 
 ```
-1. 这样减少可以数据扫描以及网络开销。
+1. 这样减少可以数据扫描以及网络开销(很多查询不需要查询所有列)。
 2. 要尽量使用覆盖索引(索引中已经包含你需要的数据)、减少回表查询。
 ```
 
@@ -49,13 +49,13 @@ create index index_salary on employees(salary);
 select first_name,hire_date,salary
 from employees
 where job_id='AD_VP'
-union
+union all
 select first_name,hire_date,salary
 from employees
 where salary>15000;
 ```
 
-* where 条件中尽量不要出现与null值比较
+* where 条件中尽量不要出现与null值的比较
 
 例如:
 ```
@@ -72,8 +72,8 @@ from employees
 where commission_pct>0;
 ```
 * 避免在where子句中使用!=或者<>操作符
-* 使用like查询条件时应尽量避免使用"%" 
-* 避免在查询条件中实用一些内置的SQL函数。
+* 使用like查询条件时应尽量避免前缀使用"%" 
+* 避免在查询条件中使用一些内置的SQL函数。
 * 当有多个查询条件、分组条件、排序条件时，尽量使用联合索引(组合索引)
 * 表连接时优先使用内连接(inner join),使用小表驱动大表。
 * 表设计时字段类型能用简单数据类型不用复杂类型。  
