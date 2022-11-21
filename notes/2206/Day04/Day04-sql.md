@@ -254,6 +254,7 @@ where employee_id=206);
 
 案例分析：
 
+> SIMPLE 、SUBQUERY
 ```sql
 explain
 select * 
@@ -262,7 +263,7 @@ where employee_id<100;
 
 ```
 
-
+> PRIMARY 
 ```sql
 explain
 select last_name,salary
@@ -273,6 +274,7 @@ where employee_id=(
     where employee_id=206);
 ```
 
+> UNION、UNION RESULT
 ```sql
 explain
 select first_name,hire_date,salary
@@ -284,6 +286,7 @@ from employees
 where  salary>15000;
 ```
 
+> DEPENDENT SUBQUERY
 ```sql
 explain
 select employee_id,first_name,salary
@@ -294,6 +297,7 @@ where salary=(
     where e1.department_id=e2.department_id);
 ```
 
+> DERIVED
 ```sql
 explain
 select min(avg_salary)
