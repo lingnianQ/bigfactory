@@ -107,6 +107,12 @@ insert into regions (region_id,region_name) values (1,'A'),(2,'B');
 3. 确定慢查询日志路径(日志文件在哪里)
 4. 确定慢查询日志的文件名(具体日志文件是哪个)，然后对文件内容进行分析。
 
+* 查看慢查询日志的打开状态？
+
+```
+show variables like '%slow_query_log%';
+```
+
 * 如何开启慢查询日志? 
   
 在 MySQL 命令行下输入下面的命令：
@@ -118,7 +124,9 @@ Query OK, 0 rows affected (0.00 sec)
 
 默认环境下，慢查询日志是关闭的。
 
-
+* 查看默认慢查询阈值 (默认为10秒中)
+show variables like '%long_query_time%';
+  
 * 如何设置慢查询的阈值？
 
 设置慢查询时间阀值(响应时间是多长时间是慢查询)
@@ -129,7 +137,7 @@ Query OK, 0 rows affected (0.00 sec)
 ```
 
 如果需要定位到慢查询，一般的方法是通过慢查询日志来查询的，
-MySQ 的慢查询日志用来记录在 MySQL中响应时间超过参数 long_query_time
+MySQL 的慢查询日志用来记录在 MySQL中响应时间超过参数 long_query_time
 （单位秒，默认值 10）设置的值并且扫描记录数不小于 min_examined_row_limit（默认值0）的语句
 
 * long_query_time 的值如何确定呢？
@@ -222,7 +230,16 @@ Extra: Using where
 select 的序列号，有几个 select 就有几个 id，id 的顺序是按 select 出现的顺序增长的。
 即：id 越大执行优先级越高，id相同则从上往下执行，id 为NULL最后执行。
 
-* select_type表示的查询类型有哪些？
+```sql
+select last_name,salary
+from employees
+where employee_id=(
+select manager_id
+from employees
+where employee_id=206);
+```
+
+* select_type表示的查询类型有哪些？ 
 
 ```
 1. SIMPLE ： 表示查询语句不包含子查询或 union
@@ -235,7 +252,59 @@ select 的序列号，有几个 select 就有几个 id，id 的顺序是按 sele
 8. DERIVED: from 子句后的相对比较复杂查询
 ```
 
-* type表示查询数据的方式。
+案例分析：
+
+```sql
+explain
+select * 
+from employees 
+where employee_id<100;
+
+```
+
+
+```sql
+explain
+select last_name,salary
+from employees
+where employee_id=(
+    select manager_id
+    from employees
+    where employee_id=206);
+```
+
+```sql
+explain
+select first_name,hire_date,salary
+from employees
+where job_id='AD_VP'
+union
+select first_name,hire_date,salary
+from employees
+where  salary>15000;
+```
+
+```sql
+explain
+select employee_id,first_name,salary
+from employees e1
+where salary=(
+    select max(salary)
+    from employees e2
+    where e1.department_id=e2.department_id);
+```
+
+```sql
+explain
+select min(avg_salary)
+from (
+select avg(salary) avg_salary
+from employees
+group by department_id) emp;
+```
+
+
+* type表示查询数据的方式。（重点）
 
 type是一个比较重要的一个属性，通过它可以判断出查询是全表扫描还是基于索引的部分扫描。
 常用属性值如下，从上至下效率依次增强。
@@ -249,6 +318,59 @@ type是一个比较重要的一个属性，通过它可以判断出查询是全�
 6. const：表示使用主键或唯一索引做等值查询，常量查询。
 7. NULL：表示不用访问表，速度最快。
 ```
+
+案例分析：
+
+> select_type为null
+
+```sql
+explain
+select now()
+```
+
+> select_type 为const
+
+```sql
+explain
+select *
+from employees
+where employee_id=206
+```
+
+> select_type为 ref
+```sql
+create index index_first_name on employees(first_name);
+explain
+select *
+from employees
+where first_name='Steven';
+```
+
+> select_type 为eq_ref
+
+```sql
+explain
+select d.department_id,d.department_name,e.first_name
+from departments d join employees e on d.manager_id = e.employee_id;
+```
+
+> select_type 为 range
+```sql
+create index index_salary on employees (salary);
+explain
+select first_name,salary
+from employees
+where salary between 10000 and 30000;
+```
+
+> select_type 为index
+```sql
+explain
+select count(*)
+from employees
+group by department_id;
+```
+
 
 * Extra中值的含义是什么？
 
