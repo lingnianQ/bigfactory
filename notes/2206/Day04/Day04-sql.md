@@ -380,14 +380,14 @@ group by department_id;
 
 Extra 表示很多额外的信息，各种操作会在 Extra 提示相关信息，常见几种如下：
 
-> 1. Using where 表示查询需要通过where条件查询数据(可能没有用到索引,也可能一部分用到了索引)。
+> Using where 表示查询需要通过where条件查询数据(可能没有用到索引,也可能一部分用到了索引)。
 ```
 explain
 select *
 from hr.employees
 where salary>10000;
 ```
-> 2. Using index 表示查询需要通过索引，索引就可以满足所需数据(不需要再回表查询，这里出现了索引覆盖)。
+> Using index 表示查询需要通过索引，索引就可以满足所需数据(不需要再回表查询，这里出现了索引覆盖)。
 
 ```
 create index index_hire_date_salary on employees(hire_date,salary);
@@ -397,7 +397,7 @@ from hr.employees
 where hire_date>'2000-03-06' and salary>10000;
 ```
 
-> 3. Using filesort 表示查询出来的结果需要额外排序，数据量小在内存，大的话在磁盘，因此有 Using filesort 建议优化。
+> Using filesort 表示查询出来的结果需要额外排序，数据量小在内存，大的话在磁盘，因此有 Using filesort 建议优化。
 
 ```
 explain
@@ -406,7 +406,7 @@ from hr.employees
 order by hire_date
 ```
 
-> 4. Using temprorary 查询使用到了临时表，一般出现于去重、分组等操作(这里一般也需要优化)。
+> Using temprorary 查询使用到了临时表，一般出现于去重、分组等操作(这里一般也需要优化)。
 
 ```
 explain
@@ -419,7 +419,7 @@ from hr.employees
 where first_name like 'B%'
 ```
 
-> 5. Using index condition 表示查询的记录，在索引中没有完全覆盖(可能要基于where或二级索引对应的主键再次查询)。
+> Using index condition 表示查询的记录，在索引中没有完全覆盖(可能要基于where或二级索引对应的主键再次查询)。
 
 ```
 explain
@@ -430,7 +430,7 @@ where hire_date>'2000-03-06' and salary>10000;
 
 ## 性能分析工具(Profile)应用
 
-* 什么是Profile？
+* 什么是Profile？(了解)
 
 Profile 是MySQL内置的一个性能分析工具，基于Profile可以更好的了解SQL执行过程中的资源情况。
 例如你的CPU,内存，IO等
