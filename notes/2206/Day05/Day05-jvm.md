@@ -12,7 +12,7 @@
 
 * JVM 产品
 
-  https://www.processon.com/mindmap/6319c2c663768972fee83362
+  https://www.processon.com/view/link/6346b8b7f346fb07deb7aedb
 
 * JVM 类加载
   
