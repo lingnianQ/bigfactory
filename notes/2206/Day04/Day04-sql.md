@@ -428,9 +428,9 @@ from hr.employees
 where hire_date>'2000-03-06' and salary>10000;
 ```
 
-## 性能分析工具(Profile)应用
+## 性能分析工具(Profile)应用（了解）
 
-* 什么是Profile？(了解)
+* 什么是Profile？
 
 Profile 是MySQL内置的一个性能分析工具，基于Profile可以更好的了解SQL执行过程中的资源情况。
 例如你的CPU,内存，IO等
@@ -443,7 +443,7 @@ Profile 是MySQL内置的一个性能分析工具，基于Profile可以更好的
 4. 查看执行SQL的query id。
 5. 通过query id查看SQL每个状态的耗时时间。
 
-* 如何确定数据是否支持Profile?
+* 如何确定数据库是否支持Profile?
 
 ```
 select @@have_profiling
@@ -454,7 +454,7 @@ select @@have_profiling
 
 ```
 select @@profiling
-假如查询结果为0表示为开启。
+假如查询结果为0表示未开启。
 ```
 
 * 如何开启Profile呢？

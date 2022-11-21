@@ -8,6 +8,24 @@
 * JVM中执行引擎(执行逻辑，GC逻辑)
 * JVM中的字节码增强技术(拓展)
 
+## 思维导图
+
+* JVM 产品
+
+  https://www.processon.com/mindmap/6319c2c663768972fee83362
+
+* JVM 类加载
+  
+  https://www.processon.com/view/link/6321bd440e3e743f5833ce29
+  
+* JVM 运行时内存
+  
+  https://www.processon.com/view/link/635e48cf1e08530a6081c147
+
+* JVM 执行引擎部分
+
+  https://www.processon.com/view/link/6361028e1e08530a6087f36a
+
 ## JVM初识
 
 * 为什么要学习JVM？
