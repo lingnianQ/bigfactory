@@ -37,6 +37,24 @@
 
 ## 索引创建及应用
 
+* 创建表
+
+```
+drop table if exists student;
+create table if not exists student
+(
+    id bigint auto_increment,
+    first_name varchar(50) not null comment '学生名字',
+    last_name varchar(20) not null comment '学生姓',
+    phone varchar(15)  not null comment '手机号',
+    email varchar(50) default '' comment '邮箱',
+    birthday date comment '出生日期',
+    create_time datetime default current_timestamp comment '注册日期',
+    primary key (id),
+    unique key (phone)
+)engine = InnoDB character set utf8mb4;
+```
+
 * 如何查看表中的索引?
 
 show index from student;
