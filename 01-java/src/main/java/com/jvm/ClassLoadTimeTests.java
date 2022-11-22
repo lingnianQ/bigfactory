@@ -15,11 +15,11 @@ class ClassB extends ClassA{
 public class ClassLoadTimeTests {
     public static void main(String[] args) throws ClassNotFoundException {
         //1.显式加载
-        //ClassLoader.getSystemClassLoader().loadClass("com.jvm.ClassA");
+       // ClassLoader.getSystemClassLoader().loadClass("com.jvm.ClassA");
         //2.隐式加载(访问类中成员,构建类的对象)
         //int a=ClassA.a;
 
-        //3.被动加载
+        //3.被动加载(通过子类直接访问父类的一个属性，子类为被动加载)
         int a=ClassB.a; //ClassB为被动加载(被动加载静态代码块不会执行)
     }
-}
+}//10:10

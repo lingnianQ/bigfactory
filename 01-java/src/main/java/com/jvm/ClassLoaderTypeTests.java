@@ -1,5 +1,9 @@
 package com.jvm;
 
+/**
+ * 获取系统默认的几个类加载器
+ * -XX:+TraceClassLoading
+ */
 public class ClassLoaderTypeTests {
     public static void main(String[] args) {
         ClassLoader loader1=
@@ -17,6 +21,6 @@ public class ClassLoaderTypeTests {
 
         ClassLoader loader4=
         Object.class.getClassLoader();
-        System.out.println(loader4);//null
+        System.out.println(loader4);//null，BootStrapClassLoader
     }
 }

@@ -1,12 +1,5 @@
 package com.jvm;
-//-Xmx128m -Xms128m
-//如何查看使用的GC -XX:+PrintCommandLineFlags
-
-//-XX:+UseSerialGC
-//-XX:+UseParallelGC
-//-XX:+UseConcMarkSweepGC
-//-XX:+UseG1GC
-
+//-Xmx128m -Xms128m -XX:+PrintGC
 public class GCTests {
     public static void main(String[] args) {
         long t1=System.currentTimeMillis();
@@ -16,6 +9,6 @@ public class GCTests {
         System.out.println(System.currentTimeMillis()-t1);
     }
     static void alloc(){
-        byte[] b1=new byte[1024];
+        byte[] b1=new byte[1024];//1k
     }
 }

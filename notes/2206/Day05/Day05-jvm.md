@@ -165,9 +165,9 @@ class SimpleClassLoader extends ClassLoader{
 
 ```
 1. 方法区(Method Area): 存储类的字节码信息、常量池。
-2. 堆区(Heap Area): 春初对象
+2. 堆区(Heap Area): 存储对象
 3. Java方法栈(Stack Area): 所有方法运行时，会创建一个栈帧对象，然后进行入栈
-4. 本地方法栈(Stack Area)：用C语言写的写方法执行时候，会进入本地方法栈
+4. 本地方法栈(Stack Area)：用C语言写的,方法执行时候，会进入本地方法栈
 5. 程序计数器(Pc Register): 用于记录当前线程要执行的下一条字节码指令的地址
 ```
 
@@ -177,7 +177,7 @@ class SimpleClassLoader extends ClassLoader{
 ## 如何理解方法区(Method Area)？
 
 ```
-方法区是逻辑上一种定义，是一种规范，不同JVM对方法区的落地实现可能不同，例如
+方法区是逻辑上一种定义，是一种规范，可被所有线程所共享，不同JVM对方法区的落地实现可能不同，例如
 在JDK7中方法区称之为持久代，在JDK8中方区叫元空间(Metaspace)，并且这个元空间
 可以是JVM堆外的一块内存，不占用操作系统为JVM分配的内存。
 
