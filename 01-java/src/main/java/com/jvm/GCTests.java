@@ -1,5 +1,6 @@
 package com.jvm;
 //-Xmx128m -Xms128m -XX:+PrintGC
+//-XX:+PrintCommandLineFlags
 public class GCTests {
     public static void main(String[] args) {
         long t1=System.currentTimeMillis();

@@ -1,0 +1,26 @@
+### 上传banner图片
+POST http://localhost/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="picFile"; filename="a.jpg"
+
+< d:/b.jpg
+--WebAppBoundary--
+
+### 发布banner
+
+POST http://localhost/banner/insert
+Content-Type: application/json
+
+{
+  "url": "/9a4b6341-9780-4d21-b965-25a811bba56b.jpg"
+}
+
+### 查询Banner
+
+GET http://localhost/banner/list
+
+### 基于id删除Banner
+
+DELETE http://localhost/banner/delete/13
