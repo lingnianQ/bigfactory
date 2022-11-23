@@ -122,11 +122,6 @@ public class ThreadPoolExecutorTests {
 
 ![img_1.png](img_1.png)
 
-# 总结(Summary)
-# 作业(Homework)
-
-1. Day06-thread.md
-2. Day06-jdk8.md
 
 
 

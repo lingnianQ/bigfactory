@@ -4,27 +4,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ThreadLocalTests {
-    static void doMethod01(){
-        ExecutorService executorService =
-                Executors.newFixedThreadPool(100);
 
-        for(int i=0;i<100;i++){
-            executorService.execute(()->{
-                System.out.println(DateUtil.parse1("2022/10/25 15:38:38"));
-            });
+    static void doMethod01(){
+        String dateStr="2022/11/23 15:12:12";
+        for(int i=0;i<10;i++) {
+            //System.out.println(DateUtil.parse1(dateStr));
+            System.out.println(DateUtil.parse2(dateStr));
         }
     }
     static void doMethod02(){
-        for(int i=0;i<100;i++){
+        String dateStr="2022/11/23 15:12:12";
+        for(int i=0;i<10;i++) {
             new Thread(()->{
-                System.out.println(DateUtil.parse2("2022/10/25 15:38:38"));
-                System.out.println(DateUtil.parse2("2022/10/25 15:38:38"));
-                System.out.println(DateUtil.parse2("2022/10/25 15:38:38"));
+                //System.out.println(DateUtil.parse1(dateStr));
+                //System.out.println(DateUtil.parse2(dateStr));
+                System.out.println(DateUtil.parse3(dateStr));
+                System.out.println(DateUtil.parse3(dateStr));
             }).start();
         }
     }
     public static void main(String[] args) {
-        //doMethod01();
+       // doMethod01();
         doMethod02();
     }
 }

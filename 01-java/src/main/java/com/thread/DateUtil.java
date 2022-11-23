@@ -25,42 +25,41 @@ import java.util.concurrent.atomic.AtomicLong;
  * 2)可以从当前线程的ThreadLocalMap中获取到指定对象
  */
 public class DateUtil {
-    //SimpleDateFormat对象是一个线程不安全的对象，不可以多个线程共享。
-    private static SimpleDateFormat sdf=
-            new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public static synchronized Date parse1(String dateStr){
-        //SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date=null;
+
+    public static Date parse1(String dateStr){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
-            date=sdf.parse(dateStr);
+            return sdf.parse(dateStr);
         }catch (ParseException e){
-            e.printStackTrace();
+            throw new RuntimeException("字符串转换日期失败了",e);
         }
-        return date;
     }
 
-    private static AtomicLong atomicLong=new AtomicLong(1);
-    private static ThreadLocal<SimpleDateFormat> td=new ThreadLocal<>();
-    public static  Date parse2(String dateStr){
-        //获取当前线程中的SimpleDateFormat对象
-        SimpleDateFormat sdf=td.get();
-        if(sdf==null){
-        //当前线程没有SimpleDateFormat对象就创建对象
-            System.out.println("Create SimpleDateDateFormat ->"+atomicLong.getAndIncrement());
-            sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        //将创建的对象存储到当前线程
-            td.set(sdf);
-        }
-        Date date=null;
+    //SimpleDateFormat对象是一个线程不安全的对象，不允许多个线程同时共享此对象
+    //假如要多线程共享使用SimpleDateFormat需要保证其线程安全
+    static SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    public static synchronized Date parse2(String dateStr){
         try {
-            date=sdf.parse(dateStr);
+            return sdf.parse(dateStr);
         }catch (ParseException e){
-            e.printStackTrace();
+            throw new RuntimeException("字符串转换日期失败了",e);
         }
-        return date;
     }
+    private static ThreadLocal<SimpleDateFormat> tdl= new ThreadLocal<SimpleDateFormat>();
 
-    public static void remove(){
-        td.remove();
+    public static Date parse3(String dateStr){
+           //1.从当前线程获取SimpleDateFormat对象
+            SimpleDateFormat sdf=tdl.get();//threadLocalMap.get(threadLocal)
+            //2.假如当前线程没有SimpleDateFormat对象，则创建，并将其存储到当前线程。
+            if(sdf==null){
+                System.out.println("Create SimpleDateFormat");
+                sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                tdl.set(sdf);//threadLocalMap.put(threadLocal,sdf);
+            }
+            try {
+                return sdf.parse(dateStr);
+            }catch (ParseException e){
+                throw new RuntimeException("类型转换异常",e);
+            }
     }
 }
