@@ -13,7 +13,7 @@ public class EliminateAllocationsTests {
 
     public static void alloc(){
         Point p1=new Point(10,20);
-        //标量替换
+        //标量(基本数据类型的变量)替换
         //int x=10;
         //int y=20;
     }

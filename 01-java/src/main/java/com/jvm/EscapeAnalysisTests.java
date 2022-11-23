@@ -11,9 +11,25 @@ public class EscapeAnalysisTests {
            long t2=System.currentTimeMillis();
            System.out.println(t2-t1);
     }
-    //static byte[]b1;
+
+    /**
+     * 方法内部创建的对象，仅仅是在方法内部使用，没有外部引用指向这个对象，
+     * 我们称之为对象为逃逸。
+     */
     static void alloc1(){
         byte[]b1=new byte[1];
-        //b1=new byte[1];//逃逸
+    }
+    static byte[] b2;
+    static void alloc2(){
+        b2=new byte[1];//对象已逃逸，有外部引用指向了此对象
+    }
+    static byte[] alloc3(){
+        return new byte[1];//对象已逃逸
+    }
+    static void alloc4(){
+        alloc5(new byte[1]);//对象已逃逸
+    }
+    static void alloc5(byte[] data){
+
     }
 }
