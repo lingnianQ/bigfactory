@@ -12,6 +12,10 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogMapper logMapper;
 
+    /**
+     *  @Async注解描述的方法会运行在spring提供的线程中
+     * @param log
+     */
     @Async
     @Override
     public void insert(Log log) {

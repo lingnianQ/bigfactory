@@ -29,10 +29,10 @@ class SyncTask implements  Runnable{
 
 public class DeadLockTests {
     public static void main(String[] args) {
-        Object obj1=new Object();
-        Object obj2=new Object();
-        Thread t1 = new Thread(new SyncTask(obj1, obj2));
-        Thread t2 = new Thread(new SyncTask(obj2, obj1));
+        Object lock1=new Object();
+        Object lock2=new Object();
+        Thread t1 = new Thread(new SyncTask(lock1, lock2));
+        Thread t2 = new Thread(new SyncTask(lock2, lock1));
         t1.start();
         t2.start();
     }

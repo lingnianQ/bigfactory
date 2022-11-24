@@ -15,11 +15,12 @@ xxxx/xx-xxxx/xx /北京大学/计算机科学与技术/本科
 * 熟悉代码编写规范（阿里巴巴代码开发规范），具备良好的代码编写习惯。
 * 熟练使用MySQL,Oracle数据库，并对MySQL应用架构、存储引擎、表设计规范、SQL编写及调优技术。
 * 熟练应用Idea、Maven、Git进行项目构建、代码编写、版本控制。
+* 可以熟练编写ArrayList、双向链表LinkedList、阻塞式队列BlockingQueue、HashMap等集合。
 * 熟练应用HTML,CSS,JS,VUE,ElementUI,Axios,Vant等前端技术。
 
 **框架类**
 
-* 熟练应用Spring框架中的IOC、AOP、MVC设计思想并能够用。
+* 熟练应用Spring框架中的IOC、AOP、MVC设计思想以及能够很好的应用,并对其源码有一定了解。
 * 熟练基于Spring Boot脚手架实现项目的构建，资源的整合，项目的配置、热部署、健康检查等。
 * 熟练基于Spring Security、jwt、Oauth2实现用户身份的认证授权、鉴权业务。
 * 熟练基于Spring Validation实现请求参数的校验。

@@ -45,8 +45,8 @@ public class DateUtil {
             throw new RuntimeException("字符串转换日期失败了",e);
         }
     }
-    private static ThreadLocal<SimpleDateFormat> tdl= new ThreadLocal<SimpleDateFormat>();
 
+    private static ThreadLocal<SimpleDateFormat> tdl= new ThreadLocal<SimpleDateFormat>();
     public static Date parse3(String dateStr){
            //1.从当前线程获取SimpleDateFormat对象
             SimpleDateFormat sdf=tdl.get();//threadLocalMap.get(threadLocal)
@@ -61,5 +61,9 @@ public class DateUtil {
             }catch (ParseException e){
                 throw new RuntimeException("类型转换异常",e);
             }
+    }
+
+    public static void remove(){
+        tdl.remove();
     }
 }

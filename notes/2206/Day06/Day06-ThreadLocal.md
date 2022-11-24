@@ -107,11 +107,11 @@ public class ThreadPoolExecutorTests {
             new ThreadPoolExecutor.CallerRunsPolicy();
     public static void main(String[] args) {
         ThreadPoolExecutor poolExecutor =
-                new ThreadPoolExecutor(corePoolSize,
+                new ThreadPoolExecutor(corePoolSize,//2
                         maximumPoolSize,
                         keepAliveTime,
                         TimeUnit.SECONDS,
-                        workQueue,
+                        workQueue,//核心线程都在忙则任务会存储到这个队列
                         threadFactory,
                         handler);
     }
@@ -122,6 +122,14 @@ public class ThreadPoolExecutorTests {
 
 ![img_1.png](img_1.png)
 
+
+# 总结(Summary)
+
+## 重难点分析
+* ThreadLocal是什么？用于解决什么问题？
+* 你项目中使用的线程池是如何创建的？(ThreadPoolExecutor)
+* 说几个你线程池中的常用参数？
+* 你SpringBoot工程中配置过线程池吗？
 
 
 

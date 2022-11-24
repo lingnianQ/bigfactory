@@ -23,14 +23,15 @@ public class ThreadPoolExecutorTests {
     /**拒绝策略：
      * 1)AbortPolicy 直接拒绝，抛出异常
      * 2)DiscardPolicy 直接丢弃
-     * 3)callerRunsPolicy 由调用着线程执行。
+     * 3)callerRunsPolicy 由调用者线程执行。
      * 4)DiscardOldestPolicy 丢弃队列中最早放入的任务，将当前任务交给线程池。
      * */
     static RejectedExecutionHandler handler=
-            new ThreadPoolExecutor.CallerRunsPolicy();
+            new ThreadPoolExecutor.AbortPolicy();
     public static void main(String[] args) {
         ThreadPoolExecutor poolExecutor=
-         new ThreadPoolExecutor(corePoolSize,
+         new ThreadPoolExecutor(
+                 corePoolSize,
                maximumPoolSize,
                keepAliveTime,
                TimeUnit.SECONDS,
@@ -38,7 +39,7 @@ public class ThreadPoolExecutorTests {
                threadFactory,
                handler);
 
-        poolExecutor.execute(()->{
+        poolExecutor.execute(()->{//Runnable
             String tName=Thread.currentThread().getName();
             System.out.println(tName+"->Task1");
             try {
@@ -59,7 +60,6 @@ public class ThreadPoolExecutorTests {
                 Thread.sleep(3000);
             }catch (Exception e){}
         });
-
         poolExecutor.execute(()->{
             String tName=Thread.currentThread().getName();
             System.out.println(tName+"->Task4");
@@ -74,6 +74,9 @@ public class ThreadPoolExecutorTests {
                 Thread.sleep(3000);
             }catch (Exception e){}
         });
+
+
+
 
         //poolExecutor.shutdownNow();
         poolExecutor.shutdown();

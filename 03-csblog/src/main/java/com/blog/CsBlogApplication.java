@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @ServletComponentScan
-@EnableAsync
+@EnableAsync// 启动异步任务
 @SpringBootApplication
 public class CsBlogApplication {
     public static void main(String[] args) {

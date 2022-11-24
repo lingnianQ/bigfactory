@@ -10,13 +10,20 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 class Counter01{
     int count;
-    synchronized int count(){//悲观锁(排它锁)
-        return count++;
+    private final Object lock=new Object();
+    int count(){//悲观锁(排它锁)，从JVM原语维度进行加锁
+        synchronized (lock) {
+            return count++;
+        }
     }
+
+    //synchronized 描述实例方法时，默认对象锁是this
+    //synchronized 描述静态方法时，默认对象锁是方法所在类的字节码对象
+    //synchronized 描述静态代码块时，小括号中使用的对象就是对象锁,指向这个对象的变量尽量使用final修饰
 }
 class Counter02{
     int count;
-    int count(){
+    int count(){//从API维度进行加锁
         ReentrantLock loc=new ReentrantLock();//可重入锁(排它锁)
         loc.lock();
         try {
@@ -40,12 +47,14 @@ public class CounterTests {
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(5);
-        Counter01 c1=new Counter01();
+        //Counter01 c1=new Counter01();
+        //Counter02 c1=new Counter02();
+        Counter03 c1=new Counter03();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
                 while(true){
-                    System.out.println(c1.count);
+                    System.out.println(c1.count());
                     try{Thread.sleep(1000);}catch(Exception e){}
                 }
             }
@@ -54,7 +63,7 @@ public class CounterTests {
             @Override
             public void run() {
                 while(true){
-                    System.out.println(c1.count);
+                    System.out.println(c1.count());
                     try{Thread.sleep(1000);}catch(Exception e){}
                 }
             }
