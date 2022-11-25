@@ -66,5 +66,6 @@ public class MethodReferenceTests {
       //doTest02();
        doTest03();
 
+
     }
 }

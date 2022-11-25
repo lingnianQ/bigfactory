@@ -1,5 +1,6 @@
 package com.jdk8;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -35,38 +36,41 @@ public class StreamTests {
     }
     //Stream对象的中间操作
     static void doTest03() {
-        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5, 8, 7,7, 6, 9, 10);
+        List<Integer> integers =
+                Arrays.asList(1, 2, 3, 4, 5, 8, 7,7, 6, 9, 10);
+        PrintStream ps=System.out;
         integers.stream()
                 .filter((item)->item%2!=0)//中间操作
-                .skip(2)//中间操作，跳过两个
-                .distinct()//去重操作
-                .limit(3) //中间操作，限定只取两个
-                .forEach(System.out::println);//终止操作
+                .skip(2)//跳过前两个
+                .distinct()//去除重复记录
+                .limit(3)//限制只取3个
+                .forEach(ps::println);//终止操作
     }
     //Stream对象的中间操作
     static void doTest04() {
-        Stream<String> stream = Arrays.stream(new String[]{"a", "abc", "ab", "abcd"});
+        Stream<String> stream =
+                Arrays.stream(new String[]{"a", "abc", "ab", "abcd"});
         stream.sorted() //排序
               .map(x->x.toUpperCase())//转换为大写
-              .forEach(System.out::println);
+              .forEach(System.out::println);//A,AB,ABC,ABCD
     }
     //终止操作match
     static void doTest05(){
         List<Integer> list=Arrays.asList(10,11,12,13,14,15);
         boolean allMatch = list.stream()
-                .allMatch(x -> x % 2 == 0);
+                .allMatch(x -> x % 2 == 0);//false
         boolean anyMatch = list.stream().anyMatch(x -> x % 2 == 0);
         boolean noneMatch = list.stream().noneMatch(x -> x > 50);
-        System.out.println(allMatch);
-        System.out.println(anyMatch);
-        System.out.println(noneMatch);
+        System.out.println(allMatch);//false
+        System.out.println(anyMatch);//true
+        System.out.println(noneMatch);//true
     }
 
     //终止操作find操作
     static void doTest06(){
         List<Integer> list=Arrays.asList(19,10,11,12,13,14,15);
         Optional<Integer> first = list.stream().sorted().findFirst();
-        System.out.println(first.get());
+        System.out.println(first.get());//10
 
         Optional<Integer> any =
                 list.parallelStream().sorted().findAny();
@@ -100,17 +104,30 @@ public class StreamTests {
         System.out.println(collect);
     }
 
+    //练习
+    static void doTestReduce10() {
+        List<Integer> list =
+                Arrays.asList(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Long reduce = list.stream().reduce(0L,(a,b)->(a+b),(a,b)->0L);
+       /* long count =
+                list.stream().reduce(0L, (a, b) -> (a + b), (a,b) -> 0L);
+        System.out.println(count);*/
+        System.out.println(reduce);
+    }
+
 
 
     public static void main(String[] args) {
        // doTest01();
-      //  doTest03();
+      //doTest03();
       //  doTest04();
-       // doTest05();
-       // doTest06();
+        //doTest05();
+  //doTest06();
 
         //doTest07();
-       // doTest08();
-        doTest09();
+        //doTest08();
+        // doTest09();
+
+        doTestReduce10();
     }
 }

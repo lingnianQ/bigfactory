@@ -14,6 +14,7 @@ public class LambdaTests {
             System.out.println(e);
         }
 
+
         asList.forEach(new Consumer<String>() {
             @Override
             public void accept(String s) {
@@ -26,15 +27,37 @@ public class LambdaTests {
 
     static void doTest02(){
         String[] strArray= {"abcd","ab","abc"};
-        Arrays.sort(strArray, (o1, o2) -> {
-                     return o1.length() - o2.length();
-                }
-        );
+    /*    Arrays.sort(strArray, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.length()-o2.length();
+            }
+        });*/
+        Arrays.sort(strArray, (o1, o2) ->o1.length() - o2.length());
+
         System.out.println(Arrays.toString(strArray));
+    }
+    static class A{
+         void doSay(){
+             System.out.println("hello");
+         }
+    }
+    static void doTest03(){
+         Runnable t=()->{
+             System.out.println("run");
+         };
+         A a1=new A(){
+             @Override
+             void doSay() {
+                 System.out.println("a1.hello");
+             }
+         };
+         a1.doSay();
     }
 
     public static void main(String[] args) {
       // doTest01();
-        doTest02();
+       // doTest02();
+        doTest03();
     }
 }

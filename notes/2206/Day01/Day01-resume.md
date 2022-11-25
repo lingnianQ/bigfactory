@@ -6,6 +6,9 @@
 * gitee地址：https://gitee.com/JasonCN2008/bigfactory/
 * CSDN个人博客: yutian.blog.csdn.net
 * 个人公众号：老齐课堂
+  
+![img_1.png](img_1.png)
+
 * 个人微信号：17610939576(JSD2206+中心+姓名)
 * 腾讯会议号：484-5569-5734
 # 课程内容说明

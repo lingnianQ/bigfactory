@@ -26,8 +26,8 @@ class Singleton02{
 
     /**
      * volatile 作用
-     * 1)禁止指令重排序
-     * 2)保证线程可见性
+     * 1)禁止指令重排序(1条语句可能会有多条指令构成，JVM为了优化指令的指令可能会对其进行重排序)
+     * 2)保证线程可见性(底层通过内存屏障实现-JMM)
      * 3)不保证原子性
      */
     private static volatile Singleton02 instance;
@@ -36,9 +36,11 @@ class Singleton02{
      * @return
      */
     public static Singleton02 getInstance() {
-        if(instance==null) {//通过外层校验可以减少锁的竞争
+        Singleton02 inst=instance;
+        if(inst==null) {//通过外层校验可以减少锁的竞争
             synchronized (Singleton02.class) {
-                if (instance == null) {
+                inst=instance;
+                if (inst == null) {
                     instance = new Singleton02();
                     //1.分配内存
                     //2.初始化属性
@@ -49,6 +51,11 @@ class Singleton02{
         }
         return instance;
     }
+}
+/**饿汉单利*/
+enum Singleton03{
+    INSTANCE;
+    private Singleton03(){}
 }
 
 public class SingletonTests {
