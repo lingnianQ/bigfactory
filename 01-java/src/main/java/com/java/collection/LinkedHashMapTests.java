@@ -48,10 +48,16 @@ public class LinkedHashMapTests {
     /**将LinkedHashMap作为一个Cache对象，当cache满的时按照LRU(最近最少使用)算法，
      * 移除容器中的对象*/
     static void doTest04(){
+        int initialCapacity=3;
         LinkedHashMap<String,Integer> map=
-                new LinkedHashMap<>(3,//初始容量
+                new LinkedHashMap<String,Integer>(initialCapacity,//初始容量
                         0.75f,//加载因子
-                        true);//访问顺序
+                        true){//访问顺序
+                    @Override
+                    protected boolean removeEldestEntry(Map.Entry<String, Integer> eldest) {
+                        return size()>initialCapacity;
+                    }
+                };
         map.put("A", 100);
         map.put("D",200);
         map.put("C", 300);
@@ -64,6 +70,6 @@ public class LinkedHashMapTests {
 
 
     public static void main(String[] args) {
-         doTest03();
+         doTest04();
     }
 }
