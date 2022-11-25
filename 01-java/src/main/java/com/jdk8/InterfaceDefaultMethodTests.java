@@ -12,6 +12,7 @@ interface IA{
     default void doMethod02(){
         System.out.println("==IA.doMethod02==");
     }
+    default void doMethod03(){}
 }
 class ClassA implements IA{
     @Override
