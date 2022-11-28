@@ -145,6 +145,7 @@ public class SimpleSingleLinkedListTests {
         System.out.println(list);//cfba
         list.removeNode(1);
         System.out.println(list);
+        list=null;
 
     }
 }
