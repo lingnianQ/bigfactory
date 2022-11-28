@@ -70,9 +70,9 @@ public class SimpleDoubleLinkedListTests {
         list.addFirst("A");
         list.addFirst("B");
         list.addFirst("C");
-        System.out.println(list);
+        System.out.println(list);//CBA
         list.addLast("E");
         list.addLast("F");
-        System.out.println(list);
+        System.out.println(list);//CBAEF
     }
 }
