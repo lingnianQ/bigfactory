@@ -209,6 +209,7 @@ on e.manager_id=m.employee_id
 **2)查询雇员206所在部门的部门名称以及这个部门所在的城市?**
 -- 雇员表中有部门名称吗?没有,部门表(departments)中有
 -- 雇员表中有城市名称名称?没有,地址表(locations)中有
+
 ```
 select e.employee_id,d.department_name,l.city
 from employees e join departments d on e.department_id = d.department_id
@@ -264,7 +265,6 @@ from employees
 group by department_id
 order by avg(salary) desc;
 ```
-
 
 **7)查询每个部门的平均薪资,只显示平均薪资大于10000的,并按降序排序**
 
@@ -340,6 +340,7 @@ limit(9)
 
 **12)说说如下查询返回的结果数是多少?**
 雇员表有100条记录，部门表有10条记录
+
 ```
    select count(*)
    from employees,deparements;
@@ -392,7 +393,7 @@ and r1.region_id>r2.region_id;
 
 数据库中的一个对象,可以将其看成是一张虚拟表,基于表创建,视图中只有结构,不存储数据,
 可以通过视图查询到表中的数据.
-  
+
 * 为什么使用视图?
   
 1. 简化程序对SQL语句的编写
@@ -426,7 +427,7 @@ drop view if exists emp_view;
 * 什么是事务?
 
 一个逻辑工作单元,这个工作单元中的所有操作,要么都成功要么都失败.
- 
+
 * 为什么要使用事务?
 
 用于保证数据的正确性(完整,一致)
@@ -442,7 +443,10 @@ drop view if exists emp_view;
 * 如何查询当前会话的事务隔离级别?
 ```
 select @@tx_isolation;
+select @@transaction_isolation;
 
+show variables like '%tx_isolation%'
+show variables like '%transaction_isolation%'
 ```
 * 如何修改当前会话的事务隔离级别?
 
@@ -470,6 +474,7 @@ select @@tx_isolation;
 
 * 一个SQL查询语句的执行流程是怎样的?
   
+
 ![img.png](img.png)
 
 * 一个SQL更新语句的执行流程是怎样的?

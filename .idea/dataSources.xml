@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/mysql?serverTimezone=Asia/Shanghai&amp;characterEncoding=utf8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="hr@localhost" uuid="5e8ba985-c452-41fd-bba7-10a214a8bc88">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/hr</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
