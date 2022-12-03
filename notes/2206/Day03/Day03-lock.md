@@ -14,7 +14,7 @@
 * 如何理解全局锁?
 
 全局锁可以对库中所有表上锁,默认是关闭的,使用前可以手动打开.
-  
+
 * 如何打开全局读锁?
 ```
 flush tables with read lock.
@@ -78,7 +78,7 @@ unlock tables;
 
 行锁是mysql中InnoDB存储引擎的一种针对行记录进行加锁的一种实现方式,默认所有的
 select 操作不加锁.
-  
+
 * 如何理解行锁上的共享锁与排它锁.
 
 1. 共享锁(S锁):允许当前事务读取一行,阻止其它事务对相同记录添加排它锁.
@@ -94,7 +94,7 @@ select 操作不加锁.
 可以对这条记录添加排它锁,但是这样可能会降低系统并发性能.
 
 ## MVCC(多版本并发控制)
-   
+
 * MVCC 是什么?
 
 MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历史版本
@@ -109,7 +109,7 @@ MVCC(Multi Version Concurrent Control)多版本并发控制,它可以通过历�
 
 * MVCC的底层逻辑是如何实现的呢?
 
-  MVCC的实现原理主要依赖于记录中的三个隐藏字段，undolog，ReadView来实现的.
+  MVCC的实现原理主要依赖于记录中的`三个隐藏字段`，`undolog`，`ReadView`来实现的.
 
 * MVCC中的隐藏字段指的是哪些？(了解)
 
